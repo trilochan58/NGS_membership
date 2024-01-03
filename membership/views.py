@@ -16,6 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 from django.views.generic import TemplateView
 from django.template.loader import get_template
+from accounts.tasks import send_token_mail
 
 from paypal.standard.forms import PayPalPaymentsForm
 
@@ -100,7 +101,6 @@ def new_membership_page(request):
                 )
                 return redirect("payment")
             else:
-                print(form.errors)
                 messages.error(
                     request, "Form not saved!!!. Please fill all the fields correctly."
                 )
@@ -319,13 +319,15 @@ def verify_general_or_lifetime_membership(request, id):
         if form.is_valid():
             membership_no = form.cleaned_data.get("membership_no")
             membership_since = form.cleaned_data.get("membership_since")
-
             verify_object.membership_no = membership_no
             verify_object.membership_since = membership_since
             verify_object.verification = True
             verify_object.verified_date = datetime.now()
             verify_object.save()
             messages.success(request, "Membership Verified")
+            subject="Your account has been verified."
+            message=f"Yor membership for Nepal Geotechnical Society is verified now."
+            send_token_mail.delay(verify_object.created_by.email,subject,message)
             return redirect("gl_verification_list")
         else:
             messages.error(
@@ -357,6 +359,9 @@ def verify_institution_membership(request, id):
     verify_object.verification = True
     verify_object.verified_date = datetime.now()
     verify_object.save()
+    subject="Membership verified."
+    message=f"Yor membership for Nepal Geotechnical Society is verified now."
+    send_token_mail.delay(verify_object.created_by.email,subject,message)
     messages.success(request, "Membership Verified")
     return redirect("ins_verification_list")
 
@@ -456,6 +461,9 @@ def reject_gl_membership(request, id):
         if form.is_valid():
             instance.remarks = form.cleaned_data.get("remarks")
             instance.rejected = True
+            subject="Your Account is rejected.(NGS)"
+            message=form.cleaned_data.get("remarks")
+            send_token_mail.delay(instance.created_by.email,subject,message)
             instance.save()
             return redirect("gl_verification_list")
 

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.decorators import login_required
+import os
 
 from membership.decorators import user_login_check
 from config.helpers import generate_unique_four_digit_number
@@ -49,17 +50,18 @@ def sign_up(request):
                 token=str(generate_unique_four_digit_number()),
             )
 
-            try:
-                send_token_mail.delay(new_user.email, new_user.token)
-            except:
-                messages.success(request, f"Your pin is {new_user.token}")
-                return redirect("login")
-
+            # try:
+            subject="Verify your account."
+            message=f"Your pin is {new_user.token}. Login with your new account and enter this pin to verify."
+            send_token_mail.delay(new_user.email,subject,message)
+            # except:
+            #     messages.success(request, f"Your pin is {new_user.token}")
             messages.success(
                 request,
                 "Your account has been created.",
             )
-            return redirect("login")
+            
+            return redirect("login")   
         else:
             messages.error(request, "Please fill the form with correct details")
             return render(request, "auth/signup.html", {"form": form})

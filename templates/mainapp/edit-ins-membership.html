@@ -53,9 +53,9 @@
                         {% endif %}
                         {% endfor %}
 
-                        <p>Remarks: {{ins.remarks}}</P>
 
                         <div>
+                            <p>Remarks: {{ins.remarks}}</P>
                                 <div  id="institutional-tab-pane" role="tabpanel" aria-labelledby="institutional-tab" tabindex="0">
                                     <form action="" method="post" class="member-personal" enctype="multipart/form-data">
                                         {% csrf_token %}

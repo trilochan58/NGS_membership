@@ -44,6 +44,7 @@
                                     <div class="inner-box" >
 
                                         <div class="manage-dash">
+                                            {% if request.user.role == 'U'%}
                                             {% if request.user.is_verified == False %}
                                         <h6 class="verfication-text">
                                             Please enter the pin we sent to you in your email to verify yourself.
@@ -59,6 +60,7 @@
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         </form>
+                                        {% endif %}
                                         {% endif %}
                                         </div>
 
@@ -157,9 +159,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        {% elif gl_user_membership.verification == False %}
+                                        {% elif gl_user_membership.verification == False and gl_user_membership.rejected == False%}
                                             <div class="admin-dash">
                                                 <h4>Your membership is under review. You will receive your membership card once we have verified your membership details.</h4>
+                                            </div>
+                                            {% elif gl_user_membership.verification == False and gl_user_membership.rejected == True%}
+                                            <div class="admin-dash">
+                                                <h4>Your membership request for NGS is rejected.</h4><br>
+                                                <h5>Remarks: {{ gl_user_membership.remarks }}</h5>
+                                                <h5>please click here to update and resubmit your form.<a href="{% url 'remarks' %}">Click here</a></h5>
+                                                
                                             </div>
                                         {% elif ins_user_membership %}
                                             <div class="admin-dash">
