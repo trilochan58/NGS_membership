@@ -859,3 +859,17 @@ def edit_stored_mail(request, id):
         form = EmailForm()
     context = {"mail": mail_instance, "groups": custom_groups}
     return render(request, "mainapp/edit_mail.html", context)
+
+
+def upgrade(request):
+    return render(request, 'mainapp/upgrade.html')
+
+def general_approved(request):
+    return render(request, 'mainapp/general_approved.html')
+
+def institutional_approved(request):
+    return render(request, 'mainapp/institutional_approved.html')
+def general_rejected(request):
+    return render(request, 'mainapp/general_rejected.html')
+def institutional_rejected(request):
+    return render(request, 'mainapp/institutional_rejected.html')

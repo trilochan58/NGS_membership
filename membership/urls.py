@@ -74,6 +74,15 @@ urlpatterns = [
     path("no-remarks/", views.no_remarks, name="no_remarks"),
     path("upgrade-to-lifetime/", views.upgrade_to_lifetime, name="upgrade_to_lifetime"),
     path("initiate-khalti/", views.initiate_khalti, name="initiate_khalti"),
+    path('upgrade-membership',views.upgrade,name="upgrade"),
+    path('general-approved',views.general_approved, name='general_approved'),
+    path('institutional-approved',views.institutional_approved, name='institutional_approved'),
+    path('general-rejected',views.general_rejected, name='general_rejected'),
+
+    path('institutional-rejected',views.institutional_rejected, name='institutional_rejected'),
+
+
+
     path(
         "payment-verification/", views.payment_verification, name="payment_verification"
     ),
@@ -92,4 +101,5 @@ urlpatterns = [
     path("api/user/<int:id>/", api.membership_api, name="gls_user_details"),
     path("api/student-user/<int:id>/", api.student_membership_api, name="student_details"),
     path("api/institutional-user/<int:id>/", api.institutional_membership_api, name="ins_details"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -320,7 +320,7 @@
 
                                     <div class="buttons">
                                         <button type="submit" class="btn btn-primary">Verify</button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Recheck</button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Reject</button>
                                     </div>
                                 </form>
                                 
@@ -329,7 +329,7 @@
                             
                             <form action="{% url 'reject_gl_membership' id=gl.id %}" method="post">
                                 {% csrf_token %}
-                                <div class="modal" tabindex="-1" id="exampleModal">
+                                <div class="modal tex-send" tabindex="-1" id="exampleModal">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">

@@ -32,9 +32,6 @@
 
               <div class="col-md-10">
                 <div class="dashboard-mid-part">
-                      
-                    
-
                     <div class="mid-complain-heading">
                             
                       <div class="dash-header">
@@ -49,14 +46,14 @@
                               </svg>
                           </div></a>
                           <div class="heading">
-                              <p>General And Lifetime Membership verification list</p>
+                              <p>Upgrade Verification list</p>
                           </div>
                       </div>
                     </div>
 
                     {% for message in messages %}
                     {% if message.tags == "success" %}
-                    <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
                       {{message}}
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
@@ -72,37 +69,37 @@
                     {% endfor %}
 
                     <div class="general-table">
-                      <form class="filter-data">
-                        <div class="member-info">
-                          <p>Membership Type:</p>
-                          <div class="info-inner">
-                              <select name="mem-type" id="mem-type">
-                                  <option value="">All</option>
-                                  <option value="">General</option> 
-                                  <option value="">Lifetime</option>  
-                                  <option value="">Student</option>                         
-                              </select>
+                        <form class="filter-data">
+                          <div class="member-info">
+                            <p>Membership Type:</p>
+                            <div class="info-inner">
+                                <select name="mem-type" id="mem-type">
+                                    <option value="">All</option>
+                                    <option value="">General</option> 
+                                    <option value="">Lifetime</option>  
+                                    <option value="">Student</option>                         
+                                </select>
+                            </div>
                           </div>
-                        </div>
-                        <div class="member-info">
-                          <p>Verification Type:</p>
-                          <div class="info-inner">
-                              <select name="veri-type" id="veri-type">
-                                  <option value="">All</option>
-                                  <option value="">Verified</option> 
-                                  <option value="">Not Verified</option>                        
-                              </select>
+                          <div class="member-info">
+                            <p>Verification Type:</p>
+                            <div class="info-inner">
+                                <select name="veri-type" id="veri-type">
+                                    <option value="">All</option>
+                                    <option value="">Verified</option> 
+                                    <option value="">Not Verified</option>                        
+                                </select>
+                            </div>
                           </div>
-                        </div>
-                        <div class="member-info info-btn">
-                            <p></p>
-                            <button class="w-100"> Reset</button>
-                        </div>
-                      </form>
-                    </div>
+                          <div class="member-info info-btn">
+                              <p></p>
+                              <button class="w-100"> Reset</button>
+                          </div>
+                        </form>
+                      </div>
+
 
                       <div class="general-table">
-                        
                         <table id="example" class="display container" style="width:100%; overflow-x: scroll;">
                           <div class="table-inner">
                             <thead>
@@ -125,7 +122,7 @@
                                     {% if members.verification == True %}
                                       <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                     {% elif members.verification == False %}
-                                      <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
+                                      <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:#ed2027; font-size: 18px;"></i>
                                     {% endif %}
                                   </td>
                                   <td>
@@ -261,8 +258,6 @@
           "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
       } );
     </script>
-    
-    
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"

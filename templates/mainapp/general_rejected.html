@@ -49,7 +49,7 @@
                               </svg>
                           </div></a>
                           <div class="heading">
-                              <p>General And Lifetime Membership verification list</p>
+                              <p>Rejected General Members List</p>
                           </div>
                       </div>
                     </div>
@@ -84,16 +84,7 @@
                               </select>
                           </div>
                         </div>
-                        <div class="member-info">
-                          <p>Verification Type:</p>
-                          <div class="info-inner">
-                              <select name="veri-type" id="veri-type">
-                                  <option value="">All</option>
-                                  <option value="">Verified</option> 
-                                  <option value="">Not Verified</option>                        
-                              </select>
-                          </div>
-                        </div>
+                        
                         <div class="member-info info-btn">
                             <p></p>
                             <button class="w-100"> Reset</button>
@@ -122,11 +113,7 @@
                                   <td>{{members.name_of_applicant}}</td>
                                   <td><b>{{members.get_membership_type_display}}</b></td>
                                   <td>
-                                    {% if members.verification == True %}
-                                      <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
-                                    {% elif members.verification == False %}
-                                      <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
-                                    {% endif %}
+                                      <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(198, 40, 40); font-size: 18px;"></i>
                                   </td>
                                   <td>
                                       {% if members.created_by.payment_user %}
