@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Page</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        th {
+            padding: 1px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 1px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+    </style>
+    
+  
+  </head>
+  <body style="font-family: Poppins;">
+    <img src="static/images/fulllogo.jpg" alt=""> 
+    
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-bottom: 10px;">1. Personal Information</h3>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Name of Applicant</th>
+                    <td > {{membership.created_by.full_name}} </td>
+                </tr>
+                <tr>
+                    <th>Date of Birth</th>
+                    <td>{{membership.dob}}</td>
+                </tr>
+                <tr>
+                    <th>Gender</th>
+                    <td>{{membership.get_gender_display}}</td>
+                </tr>
+                <tr>
+                    <th>Permanent Address</th>
+                    <td>{{membership.permanent_address}}</td>
+                </tr>
+                <tr>
+                    <th>Affiliation</th>
+                    <td>{{membership.affiliation}}</td>
+                </tr>
+                <tr>
+                    <th>Nationality</th>
+                    <td>{{membership.get_nationality_display}}</td>
+                </tr>
+                <tr>
+                    <th>Citizenship No.</th>
+                    <td>{{membership.citizenship_card_no}}</td>
+                </tr>
+                <tr>
+                    <th>Issued From</th>
+                    <td>{{membership.get_issued_from_display}}</td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="list-view">
+
+        
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 10px; margin-bottom: 10px;">2. Education</h3>
+
+        <!-- BE Education -->
+        <h4 style="color: black; font-size: 18px; margin-bottom: 10px;">BE / Equivalent</h4>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Subject</th>
+                    <td > {{membership.be_subject}} </td>
+                </tr>
+                <tr>
+                    <th>Institution</th>
+                    <td>{{membership.be_institution}}</td>
+                </tr>
+                <tr>
+                    <th>Counrty</th>
+                    <td>{{membership.get_be_country_display}}</td>
+                </tr>
+                <tr>
+                    <th>Passed Year</th>
+                    <td>{{membership.be_passed_year}}</td>
+                </tr>
+        </table>
+
+        <!-- ME Education -->
+        <h4 style="color: black; font-size: 18px; margin-top: 10px; margin-bottom: 10px;">ME / Equivalent</h4>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Subject</th>
+                    <td > {{membership.me_subject|default:"------"}} </td>
+                </tr>
+                <tr>
+                    <th>Institution</th>
+                    <td>{{membership.me_institution|default:"------"}}</td>
+                </tr>
+                <tr>
+                    <th>Counrty</th>
+                    <td>{{membership.get_me_country_display|default:"------"}}</td>
+                </tr>
+                <tr>
+                    <th>Passed Year</th>
+                    <td>{{membership.me_passed_year|default:"------"}}</td>
+                </tr>
+        </table>
+
+        <!-- PHD Education -->
+        <h4 style="color: black; font-size: 18px; margin-top: 10px; margin-bottom: 10px;">PHD / Equivalent</h4>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Subject</th>
+                    <td > {{membership.phd_subject|default:"------"}} </td>
+                </tr>
+                <tr>
+                    <th>Institution</th>
+                    <td>{{membership.phd_institution|default:"------"}}</td>
+                </tr>
+                <tr>
+                    <th>Counrty</th>
+                    <td>{{membership.get_phd_country_display|default:"------"}}</td>
+                </tr>
+                <tr>
+                    <th>Passed Year</th>
+                    <td>{{membership.phd_passed_year|default:"------"}}</td>
+                </tr>
+        </table>
+
+    </div>
+
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 10px; margin-bottom: 10px;">3. Work Description</h3>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Brief Description</th>
+                    <td  style="font-size: 10px !important;">{{membership.affiliation}}</td>
+                </tr>
+                
+        </table>
+    </div>
+
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 10px; margin-top: 400px; margin-bottom: 10px;">4. Documents</h3>
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 10px; margin-bottom: 10px;">PP photo:</h5>
+        <img src="{{membership.pp_photo.path}}" alt="" style="width: 200px; padding-bottom: 20px; border-bottom: 1px solid black;">
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 100px; margin-bottom: 10px;">Citizenship:</h5>
+        <img src="{{membership.citizenship.path}}" alt="" style="width: 100%; height: 300px;">
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 1000px; margin-bottom: 10px;">Master's Documents:</h5>
+        <img src="{{membership.masters_document.path}}" alt="" style="width: 100%;">
+
+       
+    </div>
+
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 10px; margin-bottom: 10px; margin-top: 1000px;">5. Payment Details</h3>
+
+        {% if membership.created_by.payment_user.payment_ss != "" %}
+        
+        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 40px; margin-bottom: 10px;">Paid with ScreenShot</h5>
+        <img src="{{membership.created_by.payment_user.payment_ss.path}}" alt="" style=" height: 500px;">
+
+        {% elif membership.created_by.payment_user.paid_amount_in_paisa %}
+
+                        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 40px; margin-bottom: 10px;">Paid with Khalti</h5>
+                        <img src="static/images/khalti-logo.png" alt="" style="width: 100px;"> <br>
+                        Amount: Rs {{membership.created_by.payment_user.amount_in_rs}} <br>
+                        Payment Date: {{membership.created_by.payment_user.created_at|date:"M. d, Y"}}
+     
+        {% elif membership.created_by.payment_user.paypal_payer_id %}
+
+                        <h5 style="color: #000; font-size: 16px; font-weight: 600; text-decoration: underline; margin-top: 40px; margin-bottom: 10px;">Paid with Paypal</h5>    
+                        <img src="static/images/paypal-logo.png" alt="" style="width: 100px;"> <br>
+                        Payment Date: {{membership.created_by.payment_user.created_at|date:"M. d, Y"}}
+                    
+            {% endif %}
+
+    </div>
+    
+  </body>
+</html>

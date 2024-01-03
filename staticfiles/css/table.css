@@ -1,0 +1,46 @@
+/* table */
+
+
+table.dataTable tbody tr:nth-child(even) {
+    background-color: #FCD12A !important;
+}
+div#example_wrapper {
+    padding: 21px;
+}
+h4.upper-text {
+    
+    font-size: 20px;
+    font-weight: 600;
+    padding-top: 32px;
+    padding-left: 21px;
+}
+
+
+/* general */
+
+.fi p {
+    margin-bottom: 13px;
+    margin-left: 13px;
+    font-size: 14px;
+}
+.lefti {
+    display: flex;
+}
+.righti {
+    display: flex;
+}
+.card-body.fi {
+    display: flex;
+    justify-content: space-around;
+}
+h5.degree {
+    text-decoration: underline;
+}
+h6.heading-title {
+    margin-bottom: 15px;
+}
+
+.card.card-struture {
+
+    margin-top: 20px;
+}

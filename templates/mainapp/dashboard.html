@@ -1,0 +1,245 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+
+    <section id="dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                    {% include 'base/sidebar.html' %}
+    
+                </div>
+
+                <div class="col-md-10">
+                    <div class="dashboard-mid-part">
+                        <div class="dashboard-content">
+                            <div class="dash-user">
+                                <h3>Hello! {{request.user.first_name}}</h3>
+                            </div>
+
+                            {% for message in messages %}
+                            {% if message.tags == "success" %}
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% elif message.tags == "error" %}
+                            <div class="failed-message">
+                                {{message}}
+                            </div>
+                            {% elif message.tags == "info" %}
+                            <div class="info-message">
+                                {{message}}
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+                            <div class="dash-middle-content">
+                                <div class="mid-part">
+                                    <div class="inner-box" >
+
+                                        <div class="manage-dash">
+                                            {% if request.user.is_verified == False %}
+                                        <h6 class="verfication-text">
+                                            Please enter the pin we sent to you in your email to verify yourself.
+                                        </h6>
+                                        <form method="post" action="{% url 'verify_user' %}">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                
+                                                <input type="text" name="pin" maxlength="4" class="form-control membership-div" id="membership"
+                                                    placeholder="Enter the PIN" required>
+                                            </div>
+                                            <div class="buttons">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                        {% endif %}
+                                        </div>
+
+                                        {% if gl_user_membership.verification == True %}
+                                            <div class="main-card print-img " id='printable_div_id'>
+                                                <div class="member-card" >
+                                                    <div class="card-first">
+                                                        {% if gl_user_membership.membership_type == "G" %}
+                                                            <h3>General Membership</h3>
+                                                        {% elif gl_user_membership.membership_type == "L" %}
+                                                            <h3>Lifetime Membership</h3>
+                                                        {% elif gl_user_membership.membership_type == "S" %}
+                                                            <h3>Student Membership</h3>
+                                                        {% endif %}
+                                                    </div>
+    
+                                                    <div class="card-second">
+                                                        <div class="top-card">
+                                                            <img src="{% static 'images/card-logo.png' %}" alt="">
+                                                            <div class="top-inner">
+                                                                <h3>Nepal Geotechnical Society</h3>
+                                                                <h2>भूप्रविधि समाज नेपाल</h2>
+                                                                <p>ngeotechs.org</p>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="middle-card">
+                                                            <img src="{{ gl_user_membership.pp_photo.url }}" alt="">
+                                                            <div class="card-user">
+                                                                <h3>{{gl_user_membership.name_of_applicant}}</h3>
+                                                                <p>Member Since: {{gl_user_membership.membership_since}}</p>
+                                                                <p>Member ID: {{gl_user_membership.membership_no}}</p>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="end-card">
+                                                            <div class="end-first">
+                                                                {% if not request.user.general_and_lifetime_user.membership_type == "L" %}
+                                                                <p>The card will be expired in 1 year of Issued date.</p>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="end-second">
+                                                                <img src="{% static 'images/signature.png' %}" alt="">
+                                                                <p>Authorized Signature</p>
+                                                                <p>Issued Date: {{gl_user_membership.verified_date|date}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="main-card " style="padding: 5px;" id="savecard">
+                                                <div class="member-card" >
+                                                    <div class="card-first">
+                                                        {% if gl_user_membership.membership_type == "G" %}
+                                                            <img src="{% static 'images/general.png' %}" alt="">
+                                                        {% elif gl_user_membership.membership_type == "L" %}
+                                                            <img src="{% static 'images/lige.png' %}" alt="">
+                                                        {% elif gl_user_membership.membership_type == "S" %}
+                                                            <img src="{% static 'images/student.png' %}" alt="">
+                                                        {% endif %}
+                                                    </div>
+    
+                                                    <div class="card-second">
+                                                        <div class="top-card">
+                                                            <img src="{% static 'images/card-logo.png' %}" alt="">
+                                                            <div class="top-inner">
+                                                                <h3>Nepal Geotechnical Society</h3>
+                                                                <h2>भूप्रविधि समाज नेपाल</h2>
+                                                                <p>ngeotechs.org</p>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="middle-card">
+                                                            <img src="{{ gl_user_membership.pp_photo.url }}" alt="">
+                                                            <div class="card-user">
+                                                                <h3>{{gl_user_membership.name_of_applicant}}</h3>
+                                                                <p>Member Since: {{gl_user_membership.membership_since}}</p>
+                                                                <p>Member ID: {{gl_user_membership.membership_no}}</p>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="end-card">
+                                                            <div class="end-first">
+                                                                {% if not request.user.general_and_lifetime_user.membership_type == "L" %}
+                                                                <p> The card is valid for one year from the date of issue </p>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="end-second">
+                                                                <img src="{% static 'images/signature.png' %}" alt="">
+                                                                <p>Authorized Signature</p>
+                                                                <p>Issued Date: {{gl_user_membership.verified_date|date}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elif gl_user_membership.verification == False %}
+                                            <div class="admin-dash">
+                                                <h4>Your membership is under review. You will receive your membership card once we have verified your membership details.</h4>
+                                            </div>
+                                        {% elif ins_user_membership %}
+                                            <div class="admin-dash">
+                                                <h4>Welcome to Geotechnical Society Membership Portal <br>Institutional Membership</h4>
+                                            </div>
+                                        {% elif request.user.role == "A" %}
+                                            <div class="admin-dash">
+                                                <h4>Welcome to Geotechnical Society Membership Portal Admin Page</h4>
+                                            </div>
+                                        {% elif request.user.is_verified == True and not request.user.institutional_user or request.user.general_and_lifetime_user %}
+                                            <h4>You don't have any Membership. Apply for one <a href="{% url 'new_membership_page' %}">here</a> .</h4>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="upgrade">
+                                        <h3>Upgrade to Lifetime Membership:</h3>
+                                        <a href=""> 
+                                            <button>Upgrade</button>
+                                        </a>
+                                    </div>
+                                </div>
+    
+                                <div class="right-dash">
+                                    <div class="right-dash-content">
+                                        <div class="user-name">
+                                            <div class="initial">
+                                                <p>{{request.user.first_name|first|upper}}</p> 
+                                            </div>
+    
+                                            <div class="user-details">
+                                                <div class="name">
+                                                    <p>{{request.user.full_name}}</p>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                                                        viewBox="0 0 17 17" fill="none">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M5.51371 3.26406C6.02816 3.22301 6.51655 3.02071 6.90936 2.68597C7.826 1.90481 9.17419 1.90481 10.0908 2.68597C10.4836 3.02071 10.972 3.22301 11.4865 3.26406C12.687 3.35987 13.6403 4.31318 13.7361 5.51371C13.7772 6.02816 13.9795 6.51655 14.3142 6.90936C15.0954 7.826 15.0954 9.17419 14.3142 10.0908C13.9795 10.4836 13.7772 10.972 13.7361 11.4865C13.6403 12.687 12.687 13.6403 11.4865 13.7361C10.972 13.7772 10.4836 13.9795 10.0908 14.3142C9.17419 15.0954 7.826 15.0954 6.90936 14.3142C6.51655 13.9795 6.02816 13.7772 5.51371 13.7361C4.31318 13.6403 3.35987 12.687 3.26406 11.4865C3.22301 10.972 3.02071 10.4836 2.68597 10.0908C1.90481 9.17419 1.90481 7.826 2.68597 6.90936C3.02071 6.51655 3.22301 6.02816 3.26406 5.51371C3.35987 4.31318 4.31318 3.35987 5.51371 3.26406ZM11.4658 7.46578C11.7782 7.15336 11.7782 6.64683 11.4658 6.33441C11.1534 6.02199 10.6468 6.02199 10.3344 6.33441L7.7001 8.96873L6.66578 7.93441C6.35336 7.62199 5.84683 7.62199 5.53441 7.93441C5.22199 8.24683 5.22199 8.75336 5.53441 9.06578L7.13441 10.6658C7.44683 10.9782 7.95336 10.9782 8.26578 10.6658L11.4658 7.46578Z"
+                                                            fill="#FCB810" />
+                                                    </svg>
+                                                </div>
+                                                <div class="email">
+                                                    <p>Email: <span>{{request.user.email}}</span></p>
+                                                </div>
+                                                <div class="phone">
+                                                    <p>Phone No: <span>{{request.user.phone}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+    
+                                        <div class="right-dash-buttons">
+                                        {% if request.user.general_and_lifetime_user.verification == True %}
+                                        <a href="">
+                                            <button onClick="printdiv('printable_div_id');">Print Card</button>
+                                        </a>
+
+                                        <div class="save-card">
+                                            <button onclick="saveAsImage('savecard')">Save Card</button>
+                                        </div>
+                                        
+                                        {% endif %}
+                                        <a href="{% url 'edit_profile' %}">
+                                            <button>
+                                                Edit profile
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'change_password' %}">
+                                            <button>
+                                               Change Password
+                                            </button>
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+</html>
+{% endblock %}

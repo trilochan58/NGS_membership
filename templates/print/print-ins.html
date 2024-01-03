@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Page</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        th {
+            padding: 1px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 1px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+    </style>
+    
+  
+  </head>
+  <body style="font-family: Poppins;">
+
+    <img src="static/images/fulllogo.jpg" alt="" style=""> 
+    
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-bottom: 10px;">1. Institutional Information</h3>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Company Name</th>
+                    <td >{{membership.company_name}}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{membership.company_address}}</td>
+                </tr>
+                <tr>
+                    <th>Registration No.</th>
+                    <td>{{membership.registration_no}}</td>
+                </tr>
+                <tr>
+                    <th>Website</th>
+                    <td>{{membership.website}}</td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="list-view">
+
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 10px; margin-bottom: 10px;">2.Institutional Documents</h3>
+        <table style="border: 1px solid black; width: 50%;">
+                <tr>
+                    <th >Working Field:</th>
+                    <td >{{membership.working_field}}</td>
+                </tr>
+                <tr>
+                    <th>Contact Person:</th>
+                    <td>{{membership.contact_person}}</td>
+                </tr>
+                <tr>
+                    <th>Contact Number:</th>
+                    <td>{{membership.contact_number}}</td>
+                </tr>
+        </table>
+
+        <h5 style="color: #000; font-size: 20px; font-weight: 600; text-decoration: underline; margin-top: 10px; margin-bottom: 10px;">Documents</h5>
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 10px; margin-bottom: 10px;">Company Logo:</h5>
+        <img src="{{membership.logo.path}}" alt="" style="height: 300px;">
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 1000px; margin-bottom: 10px;">PAN:</h5>
+        <img src="{{membership.pan_document.path}}" alt="" style="">
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 1000px; margin-bottom: 10px;">Registration:</h5>
+        <img src="{{membership.registration_document.path}}" alt="" style="">
+
+        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 10p00px; margin-bottom: 10px;">Application:</h5>
+        <img src="{{membership.company_document.path}}" alt="" style="">
+        
+
+    </div>
+
+
+    <div class="list-view">
+        <h3 style="color: #fcb810; font-size: 20px; margin-top: 1000px; margin-bottom: 10px;">3. Payment Details</h3>
+
+        {% if membership.created_by.payment_user.payment_ss != "" %}
+        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 10px; margin-bottom: 10px;">Payment Screenshot</h5>
+        <img src="{{membership.created_by.payment_user.payment_ss.path}}" alt="">
+
+        {% elif membership.created_by.payment_user.paid_amount_in_paisa %}
+
+            <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 10px; margin-bottom: 10px;">Paid Using Khalti</h5>
+                <img src="static/images/khalti-logo.png" alt="" style="width: 100px;"> <br>
+                Amount: Rs {{membership.created_by.payment_user.amount_in_rs}} <br>
+                Payment Date: {{membership.created_by.payment_user.created_at|date:"M. d, Y"}}
+          
+
+                {% elif membership.created_by.payment_user.paypal_payer_id %}
+
+                        <h5 style="color: #000; font-size: 16px; font-weight: 600;  margin-top: 10px; margin-bottom: 10px;">Paid Using Paypal</h5>
+                        <img src="static/images/paypal-logo.png" alt="" style="width: 100px;"> <br>
+                        Payment Date: {{membership.created_by.payment_user.created_at|date:"M. d, Y"}}
+                   
+            {% endif %}
+
+    </div>
+    
+  </body>
+</html>

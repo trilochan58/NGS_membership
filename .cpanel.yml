@@ -1,0 +1,9 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/kantggjb/oms/ #this is original
+    - /bin/cp -r accounts $DEPLOYPATH
+    # - /bin/cp -r config $DEPLOYPATH
+    - /bin/cp -r membership $DEPLOYPATH
+    - /bin/cp -r general $DEPLOYPATH
+    - /bin/cp -r static $DEPLOYPATH
+    - /bin/cp -r templates $DEPLOYPATH

@@ -1,0 +1,173 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+
+<section id="new-member">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                
+                {% include 'base/sidebar.html' %}
+
+            </div>
+            <div class="col-md-10">
+                <div class="dashboard-mid-part">
+                    <div class="dashboard-content">
+                        <div class="mid-complain-heading">
+                        
+                            <div class="dash-header">
+                                <a onclick="goBack()" href="#" id="back-button">
+                                <div class="pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M13.7369 17.5254C13.6332 17.5256 13.5305 17.5052 13.4347 17.4655C13.3388 17.4259 13.2518 17.3677 13.1786 17.2942L8.44174 12.5574C8.29379 12.4092 8.21069 12.2084 8.21069 11.9991C8.21069 11.7897 8.29379 11.5889 8.44174 11.4408L13.1786 6.70392C13.3266 6.55584 13.5275 6.47266 13.7369 6.47266C13.9463 6.47266 14.1471 6.55584 14.2952 6.70392C14.4433 6.85199 14.5265 7.05282 14.5265 7.26223C14.5265 7.47164 14.4433 7.67248 14.2952 7.82055L10.1167 11.9997L14.2952 16.1776C14.4056 16.288 14.4809 16.4287 14.5113 16.5819C14.5418 16.735 14.5262 16.8938 14.4664 17.0381C14.4066 17.1823 14.3054 17.3056 14.1756 17.3924C14.0457 17.4791 13.8931 17.5254 13.7369 17.5254Z"
+                                            fill="black" />
+                                    </svg>
+                                </div></a>
+                                <div class="heading">
+                                    <p>Edit Membership Details</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% for message in messages %}
+                        {% if message.tags == "success" %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% elif message.tags == "error" %}
+                        <div class="failed-message">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == "info" %}
+                        <div class="info-message">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <p>Remarks: {{ins.remarks}}</P>
+
+                        <div>
+                                <div  id="institutional-tab-pane" role="tabpanel" aria-labelledby="institutional-tab" tabindex="0">
+                                    <form action="" method="post" class="member-personal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        
+                                        <h3>1. Institutional Information </h3>
+                                        <div class="member-details">
+                                            
+                                            <div class="member-info">
+                                                <p class="required">Company Name</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="company_name" id="companynam" value="{{ins.company_name}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Address</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="company_address" id="companyaddress" value="{{ins.company_address}}" required>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="member-info">
+                                                <p class="required">Registration No.</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="registration_no" id="regno" value="{{ins.registration_no}}" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="member-info">
+                                                <p class="required">Website</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="website" id="website" value="{{ins.website}}" required>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <h3>2. Institutional Documents </h3>
+                                        <div class="member-details">
+                                            <div class="member-info2">
+                                                <p class="required">PAN</p>
+                                                <div class="inner-image">
+                                                    <img src="{{ ins.pan_document.url }}" alt="PAN Document" width="50%">
+                                                    <input type="file" name="pan_document" id="panimg" accept="image/*">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Registration</p>
+                                                <div class="inner-image">
+                                                    <img src="{{ ins.registration_document.url }}" alt="Registration Document" width="50%">
+                                                    <input type="file" name="registration_document" id="regimg" accept="image/*">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Letter of Application</p>
+                                                <div class="inner-image">
+                                                    <img src="{{ ins.company_document.url }}" alt="Letter Document" width="50%">
+                                                    <input type="file" name="company_document" id="othimg" accept="image/*">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Company Logo</p>
+                                                <div class="inner-image">
+                                                    <img src="{{ ins.logo.url }}" alt="Company Logo" width="50%">
+                                                    <input type="file" name="logo" id="complog" accept="image/*" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Working Field (Description):</p>
+                                                <div class="member-info">
+                                                    <textarea name="working_field" id="work-exp" cols="10" rows="5">{{ins.working_field}}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Contact Person</p>
+                                                <div class="info-inner">
+                                                    <input type="email" name="contact_person" id="contact-email" value="{{ins.contact_person}}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Contact Number</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="contact_number" id="contact-number" value="{{ins.contact_number}}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit">Update</button>
+                                    </form>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+{% endblock %}

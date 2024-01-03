@@ -1,0 +1,831 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+
+<section id="new-member">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                
+                {% include 'base/sidebar.html' %}
+
+            </div>
+            
+            <div class="col-md-10">
+                <div class="dashboard-mid-part">
+                    <div class="dashboard-content">
+                        <div class="mid-complain-heading">
+                        
+                            <div class="dash-header">
+                                <a onclick="goBack()" href="#" id="back-button">
+                                <div class="pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M13.7369 17.5254C13.6332 17.5256 13.5305 17.5052 13.4347 17.4655C13.3388 17.4259 13.2518 17.3677 13.1786 17.2942L8.44174 12.5574C8.29379 12.4092 8.21069 12.2084 8.21069 11.9991C8.21069 11.7897 8.29379 11.5889 8.44174 11.4408L13.1786 6.70392C13.3266 6.55584 13.5275 6.47266 13.7369 6.47266C13.9463 6.47266 14.1471 6.55584 14.2952 6.70392C14.4433 6.85199 14.5265 7.05282 14.5265 7.26223C14.5265 7.47164 14.4433 7.67248 14.2952 7.82055L10.1167 11.9997L14.2952 16.1776C14.4056 16.288 14.4809 16.4287 14.5113 16.5819C14.5418 16.735 14.5262 16.8938 14.4664 17.0381C14.4066 17.1823 14.3054 17.3056 14.1756 17.3924C14.0457 17.4791 13.8931 17.5254 13.7369 17.5254Z"
+                                            fill="black" />
+                                    </svg>
+                                </div></a>
+                                <div class="heading">
+                                    <p>New Membership</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for message in messages %}
+                        {% if message.tags == "success" %}
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <strong>{{request.user.full_name}}</strong>{{message}}.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% elif message.tags == "error" %}
+                        <div class="failed-message">
+                        {{message}}
+                        </div>
+                        {% elif message.tags == "info" %}
+                        <div class="info-message">
+                        {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <div class="new-member">
+                            <div class="member-heading">
+                                <h3>Choose Membership Type</h3>
+                            </div>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="lifetime-tab" data-bs-toggle="tab" data-bs-target="#lifetime-tab-pane" type="button" role="tab" aria-controls="lifetime-tab-pane" aria-selected="false">Lifetime</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link " id="general-tab" data-bs-toggle="tab" data-bs-target="#general-tab-pane" type="button" role="tab" aria-controls="general-tab-pane" aria-selected="true">General</button>
+                                  </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="student-tab" data-bs-toggle="tab" data-bs-target="#student-tab-pane" type="button" role="tab" aria-controls="student-tab-pane" aria-selected="false">Student</button>
+                                  </li>
+                                <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="institutional-tab" data-bs-toggle="tab" data-bs-target="#institutional-tab-pane" type="button" role="tab" aria-controls="institutional-tab-pane" aria-selected="false">Institutional</button>
+                                </li>
+                              </ul>
+                            
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane active show" id="lifetime-tab-pane" role="tabpanel" aria-labelledby="lifetime-tab" tabindex="0">
+                                    <form action="" method="post" class="member-personal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_name" value="lifetime_membership_form">
+                                        <h3>1. Personal Information</h3>
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Salutation</p>
+                                                <div class="info-inner">
+                                                    <select name="salutation" id="salutation">
+                                                        <option value="">Select Salutation</option>
+                                                        {% for k, v in salutation %}
+                                                            <option value="{{k}}" {% if form.salutation.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="member-info">
+                                                <p class="required">Name of Applicant</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="name_of_applicant" id="name" placeholder="Enter your name" value="{{request.user.full_name}}" readonly required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Date Of Birth</p>
+                                                <div class="info-inner">
+                                                    <input type="date" name="dob" id="dob" placeholder="ID" value="{{ form.dob.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Gender</p>
+                                                <div class="info-inner">
+                                                    <select name="gender" id="gender" required>
+                                                        <option>Select Gender</option>
+                                                        {% for k, v in gender %}
+                                                            <option value="{{k}}" {% if form.gender.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Permanent Address</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Affiliation</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="affiliation" id="affiliation" placeholder="Enter Organization Name" value="{{ form.affiliation.value }}" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="member-info">
+                                                <p class="required">Nationality</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="nationality" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.nationality.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        
+
+                                            <div class="member-info">
+                                                <p class="required">Citizenship Card No.</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Issued From</p>
+                                                <div class="info-inner">
+                                                    <select id="district" name="issued_from" required>
+                                                        <option>select disctrict</option>
+                                                        {% for k, v in districts %}
+                                                            <option value="{{k}}" {% if form.issued_from.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>2. Education</h3>
+
+                                        <h4 class="required edu-head">i. BE/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p class="required">Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_subject" id="besubject" placeholder="Enter the Subject" value="{{ form.be_subject.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_institution" id="beinstitute" placeholder="Enter the Institution" value="{{ form.be_institution.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="be_country" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.be_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Passed Year</p>
+                                                <div class="info-inner" {% if form.be_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="be_passed_year" id="bepass" placeholder="Enter the Passed Year" value="{{ form.be_passed_year.value }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="edu-head">ii. ME/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p>Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="me_subject" id="mesubject" placeholder="Enter the Subject" value="{{ form.me_subject.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="me_institution" id="meinstitute" placeholder="Enter the Institution" value="{{ form.me_institution.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="me_country">
+                                                        <option value="">select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.me_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Passed Year</p>
+                                                <div class="info-inner" {% if form.me_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="me_passed_year" id="mepass" placeholder="Enter the Passed Year" value="{{ form.me_passed_year.value }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="edu-head">iii. PHD/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p >Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="phd_subject" id="phdsubject" placeholder="Enter the Subject" value="{{ form.phd_subject.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="phd_institution" id="phdinstitute" placeholder="Enter the Institution" value="{{ form.phd_institution.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="phd_country">
+                                                        <option value="">select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.phd_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Passed Year</p>
+                                                <div class="info-inner" {% if form.phd_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="phd_passed_year" id="phdpass" placeholder="Enter the Passed Year" value="{{ form.phd_passed_year.value }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>3. Documents</h3>
+                                        <div class="member-details">
+                                            <div class="member-info2">
+                                                <p class="required">PP Photo 
+                                                    (Passport size photograph of the applicant showing both ears)
+                                                </p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="pp_photo" id="photo" accept="image/*" required>
+                                                </div>
+                                                {% if form.pp_photo.errors %}
+                                                    <p class="error">{{ form.pp_photo.errors }}</p>
+                                                {% endif %}
+
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Citizenship</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="citizenship" id="citizenphoto" accept="image/*" required>
+                                                </div>
+                                                {% if form.citizenship.errors %}
+                                                    <p class="error">{{ form.citizenship.errors }}</p>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Any highest degree certificate or (Document that certifies you are eligible for NGS Membership)</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="masters_document" id="masterdoc" accept="image/*" required>
+                                                </div>
+                                                {% if form.masters_document.errors %}
+                                                    <p class="error">{{ form.masters_document.errors }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <h3>4. Work Experience</h3>
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Field of Expertise</p>
+                                                <div class="member-info">
+                                                    <textarea name="work_experience" id="brief-des" cols="10" rows="5">{{form.work_experience.value}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="Submit">Submit</button>
+                                    </form>
+                                </div>
+
+
+
+                                <div class="tab-pane fade " id="general-tab-pane" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
+                                    <form action="" method="post" class="member-personal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_name" value="general_membership_form">
+                                        <h3>1. Personal Information</h3>
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Salutation</p>
+                                                <div class="info-inner">
+                                                    <select name="salutation" id="salutation">
+                                                        <option value="">Select Salutation</option>
+                                                        {% for k, v in salutation %}
+                                                            <option value="{{k}}" {% if form.salutation.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Name of Applicant</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="name_of_applicant" id="name" placeholder="Enter your name" value="{{request.user.full_name}}" readonly required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Date Of Birth</p>
+                                                <div class="info-inner">
+                                                    <input type="date" name="dob" id="dob" placeholder="ID" value="{{ form.dob.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Gender</p>
+                                                <div class="info-inner">
+                                                    <select name="gender" id="gender" required>
+                                                        <option>Select Gender</option>
+                                                        {% for k, v in gender %}
+                                                            <option value="{{k}}" {% if form.gender.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Permanent Address</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Affiliation</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="affiliation" id="affiliation" placeholder="Enter Organization Name" value="{{ form.affiliation.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Nationality</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="nationality" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.nationality.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Citizenship Card No.</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Issued From</p>
+                                                <div class="info-inner">
+                                                    <select id="district" name="issued_from" required>
+                                                        <option>select disctrict</option>
+                                                        {% for k, v in districts %}
+                                                            <option value="{{k}}" {% if form.issued_from.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            
+                                        </div>
+
+                                        <h3>2. Education</h3>
+
+                                        <h4 class="required edu-head">i. BE/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p class="required">Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_subject" id="besubject" placeholder="Enter the Subject" value="{{ form.be_subject.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_institution" id="beinstitute" placeholder="Enter the Institution" value="{{ form.be_institution.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="be_country" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.be_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Passed Year</p>
+                                                <div class="info-inner" {% if form.be_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="be_passed_year" id="bepass" placeholder="Enter the Passed Year" value="{{ form.be_passed_year.value }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="edu-head">ii. ME/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p>Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="me_subject" id="mesubject" placeholder="Enter the Subject" value="{{ form.me_subject.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="me_institution" id="meinstitute" placeholder="Enter the Institution" value="{{ form.me_institution.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="me_country">
+                                                        <option value="">select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.me_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Passed Year</p>
+                                                <div class="info-inner" {% if form.me_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="me_passed_year" id="mepass" placeholder="Enter the Passed Year" value="{{ form.me_passed_year.value }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="edu-head">iii. PHD/ Equivalent</h4>
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p>Subject</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="phd_subject" id="phdsubject" placeholder="Enter the Subject" value="{{ form.phd_subject.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="phd_institution" id="phdinstitute" placeholder="Enter the Institution" value="{{ form.phd_institution.value }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Country</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="phd_country">
+                                                        <option value="">select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.phd_country.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p>Passed Year</p>
+                                                <div class="info-inner" {% if form.phd_passed_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="phd_passed_year" id="phdpass" placeholder="Enter the Passed Year" value="{{ form.phd_passed_year.value }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>3. Documents</h3>
+                                        <div class="member-details">
+                                            <div class="member-info2">
+                                                <p class="required">PP Photo
+                                                    (Passport size photograph of the applicant showing both ears)
+                                                </p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="pp_photo" id="photo" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Citizenship</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="citizenship" id="citizenphoto" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Any highest degree certificate or (Document that certifies you are eligible for NGS Membership)</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="masters_document" id="masterdoc" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <h3>4. Work Experience</h3>
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Field of Expertise</p>
+                                                <div class="member-info">
+                                                    <textarea name="work_experience" id="brief-des" cols="10" rows="5">{{form.work_experience.value}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="Submit">Submit</button>
+                                    </form>
+                                </div>
+
+
+
+                                <div class="tab-pane fade" id="student-tab-pane" role="tabpanel" aria-labelledby="student-tab" tabindex="0">
+                                    <form action="" method="post" class="member-personal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_name" value="student_membership_form">
+                                        <h3>1. Personal Information</h3>
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Salutation</p>
+                                                <div class="info-inner">
+                                                    <select name="salutation" id="salutation">
+                                                        <option value="">Select Salutation</option>
+                                                        {% for k, v in salutation %}
+                                                            <option value="{{k}}" {% if form.salutation.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Name of Applicant</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="name_of_applicant" id="name" placeholder="Enter your name" value="{{request.user.full_name}}" readonly required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Date Of Birth</p>
+                                                <div class="info-inner">
+                                                    <input type="date" name="dob" id="dob" placeholder="ID" value="{{ form.dob.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Gender</p>
+                                                <div class="info-inner">
+                                                    <select name="gender" id="gender" required>
+                                                        <option>Select Gender</option>
+                                                        {% for k, v in gender %}
+                                                            <option value="{{k}}" {% if form.gender.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Permanent Address</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Affiliation</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="affiliation" id="affiliation" placeholder="Enter Organization Name" value="{{ form.affiliation.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Nationality</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="nationality" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.nationality.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Citizenship Card No.</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Issued From</p>
+                                                <div class="info-inner">
+                                                    <select id="district" name="issued_from" required>
+                                                        <option>select disctrict</option>
+                                                        {% for k, v in districts %}
+                                                            <option value="{{k}}" {% if form.issued_from.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>2. Education</h3>
+
+                                        <div class="member-details">
+                                            <div class="member-info3">
+                                                <p class="required">Level</p>
+                                                <div class="info-inner">
+                                                    <select name="level" id="stulev" required>
+                                                        <option value="">Select Current Level</option>
+                                                        {% for k, v in student_level %}
+                                                            <option value="{{k}}" {% if form.level.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Institution</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="institution" id="beinstitute" placeholder="Enter the Institution" value="{{ form.institution.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Country of Institution</p>
+                                                <div class="info-inner">
+                                                    <select id="country" name="country_of_institution" required>
+                                                        <option>select country</option>
+                                                        {% for k, v in countries %}
+                                                            <option value="{{k}}" {% if form.country_of_institution.value == k %}selected{% endif %}>{{v}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info3">
+                                                <p class="required">Expected Pass Year</p>
+                                                <div class="info-inner" {% if form.expected_pass_year.errors %}style="border: 1px solid red;"{% endif %}>
+                                                    <input type="text" name="expected_pass_year" id="bepass" placeholder="Enter the Expected Passed Year" value="{{ form.expected_pass_year.value }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>3. Documents</h3>
+                                        <div class="member-details">
+                                            <div class="member-info2">
+                                                <p class="required">PP Photo
+                                                    (Passport size photograph of the applicant showing both ears)
+                                                </p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="pp_photo" id="photo" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Citizenship</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="citizenship" id="citizenphoto" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">College ID Card</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="college_id_card" id="masterdoc" accept="image/*" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="Submit">Submit</button>
+                                    </form>
+                                </div>
+
+
+
+                                <div class="tab-pane fade" id="institutional-tab-pane" role="tabpanel" aria-labelledby="institutional-tab" tabindex="0">
+                                    <form action="" method="post" class="member-personal" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form_name" value="institutional_membership_form">
+                                        <h3>1. Institutional Information </h3>
+                                        <div class="member-details">
+                                            
+                                            <div class="member-info">
+                                                <p class="required">Company Name</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="company_name" id="companynam" placeholder="Enter your company name" value="{{ form.company_name.value }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info">
+                                                <p class="required">Address</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="company_address" id="companyaddress" placeholder="Enter your company address" value="{{ form.company_address.value }}" required>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="member-info">
+                                                <p class="required">Registration No.</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="registration_no" id="regno" placeholder="Enter Your Register Number" value="{{ form.registration_no.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Website</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="website" id="website" placeholder="Enter Your Website URL" value="{{ form.website.value }}" required>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <h3>2. Institutional Documents </h3>
+                                        <div class="member-details">
+                                            <div class="member-info2">
+                                                <p class="required">PAN</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="pan_document" id="panimg" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Registration</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="registration_document" id="regimg" accept="image/*" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info2">
+                                                <p class="required">Letter of Application</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="company_document" id="othimg" accept="image/*" required>
+                                                </div>
+                                            </div>
+                                            <div class="member-info2">
+                                                <p class="required">Company Logo</p>
+                                                <div class="inner-image">
+                                                    <input type="file" name="logo" id="complog" accept="image/*" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="member-details">
+                                            <div class="member-info">
+                                                <p class="required">Working Field (Description):</p>
+                                                <div class="member-info">
+                                                    <textarea name="working_field" id="work-exp" cols="10" rows="5">{{ form.working_field.value }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Contact Person</p>
+                                                <div class="info-inner">
+                                                    <input type="email" name="contact_person" id="contact-email" placeholder="Enter contact person email" value="{{ form.contact_person.value }}" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="member-info">
+                                                <p class="required">Contact Number</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="contact_number" id="contact-number" placeholder="Enter contact number" value="{{ form.contact_number.value }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+{% endblock %}

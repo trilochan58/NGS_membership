@@ -1,0 +1,277 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
+        integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+  <body>
+
+    <section id="dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                    {% include 'base/sidebar.html' %}
+    
+                </div>
+              
+                <div class="col-md-10">
+                    <div class="dashboard-mid-part">
+                        <div class="table-data">
+                            <div class="mid-complain-heading">
+                            
+                                <div class="dash-header">
+                                    <a onclick="goBack()" href="#" id="back-button">
+                                    <div class="pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none">
+                                            <path
+                                                d="M13.7369 17.5254C13.6332 17.5256 13.5305 17.5052 13.4347 17.4655C13.3388 17.4259 13.2518 17.3677 13.1786 17.2942L8.44174 12.5574C8.29379 12.4092 8.21069 12.2084 8.21069 11.9991C8.21069 11.7897 8.29379 11.5889 8.44174 11.4408L13.1786 6.70392C13.3266 6.55584 13.5275 6.47266 13.7369 6.47266C13.9463 6.47266 14.1471 6.55584 14.2952 6.70392C14.4433 6.85199 14.5265 7.05282 14.5265 7.26223C14.5265 7.47164 14.4433 7.67248 14.2952 7.82055L10.1167 11.9997L14.2952 16.1776C14.4056 16.288 14.4809 16.4287 14.5113 16.5819C14.5418 16.735 14.5262 16.8938 14.4664 17.0381C14.4066 17.1823 14.3054 17.3056 14.1756 17.3924C14.0457 17.4791 13.8931 17.5254 13.7369 17.5254Z"
+                                                fill="black" />
+                                        </svg>
+                                    </div></a>
+                                    <div class="heading">
+                                        <p>Approval Form</p>
+                                    </div>
+                                </div>
+                                <div class="heading2">
+                                    <a href="https://pdfmachine.kantipurinfotech.com.np/public/api/institutionalcard/{{ins.id}}/" target="_blank">
+                                        <button class="btn">Download PDF</button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            {% for message in messages %}
+                            {% if message.tags == "success" %}
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{message}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% elif message.tags == "error" %}
+                            <div class="failed-message">
+                                {{message}}
+                            </div>
+                            {% elif message.tags == "info" %}
+                            <div class="info-message">
+                                {{message}}
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+    
+                            <div class="general-table">
+                                <div class="card card-struture">
+                                    <div class="card-header">
+                        
+                                        <button type="button" class="btn btn-warning">1. Institutional Information</button>
+                        
+                                    </div>
+                                    <div class="card-body fi experience">
+                                        <div class="lefti">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Company Name:</h6>
+                                                <h6 class="heading-title">Address:</h6>
+                                                <h6 class="heading-title">Registration No:</h6>
+                                                <h6 class="heading-title">Website:</h6>
+                                            </div>
+                                            <div class="right-field">
+                                                <p>{{ins.company_name}}</p>
+                                                <p>{{ins.company_address}}</p>
+                                                <p>{{ins.registration_no}}</p>
+                                                <p><a href="" target="_blank"></a></p>
+                                               
+                                            </div>
+                                        </div>
+                        
+                        
+                                    </div>
+                        
+                                    
+                        
+                                </div>
+                        
+                                <div class="card card-struture">
+                                    <div class="card-header">
+                        
+                                        <button type="button" class="btn btn-warning">2. Institutional Documents</button>
+                        
+                                    </div>
+                                    <div class="card-body fi institute-manage">
+                                        <div class="lefti">
+                                      
+                                            <div class="docu">
+                                                <h6 class="heading-title">PAN:</h6>
+                                                <div>
+                                                    <a href="{{ins.pan_document.url}}" data-fancybox data-caption="PAN">
+                                                        <img src="{{ins.pan_document.url}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="docu">
+                                                <h6 class="heading-title">Registration:</h6>
+                                                <div>
+                                                    <a href="{{ins.registration_document.url}}" data-fancybox data-caption="Registration">
+                                                        <img src="{{ins.registration_document.url}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="docu">
+                                                <h6 class="heading-title">Application Letter</h6>
+                                                <div>
+                                                    <a href="{{ins.company_document.url}}" data-fancybox data-caption="Application Letter">
+                                                        <img src="{{ins.company_document.url}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="docu">
+                                                <h6 class="heading-title">Company Logo:</h6>
+                                                <div>
+                                                    <a href="{{ins.logo.url}}" data-fancybox data-caption="Company Logo">
+                                                        <img src="{{ins.logo.url}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                        
+                                        </div>
+                                        <div class="righti">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Working Field:</h6>
+                                                <p>{{ins.working_field}}</p>
+                                                
+                                               
+                                            </div>
+                                            <div class="right-field">
+                                                <h6 class="heading-title">Contact Person:</h6>
+                                                <p>{{ins.contact_person}}</p>
+                                                
+                                            </div>
+                                            <div class="right-field">
+                                                <h6 class="heading-title">Contact Number:</h6>
+                                                <p>{{ins.contact_number}}</p>
+                                                
+                                            </div>
+                                        </div>
+                        
+                        
+                                    </div>
+                        
+                                    
+                        
+                                </div>
+
+                                <div class="card card-struture">
+                                    <div class="card-header">
+                                        <button type="button" class="btn btn-warning">3. Payment Details </button>
+                                    </div>
+                                    <div class="card-body fi experience">
+
+                                        {% if ins.created_by.payment_user.payment_ss != "" %}
+                                        <div class="doc">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Payment Screenshot</h6>
+                                            </div>
+                                            <div class="right-field">
+                                                <span> 
+                                                    <a href="{{ins.created_by.payment_user.payment_ss.url}}" data-fancybox data-caption="Photo">
+                                                        <img src="{{ins.created_by.payment_user.payment_ss.url}}" />
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {% elif ins.created_by.payment_user.paid_amount_in_paisa %}
+                                        <div class="doc">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Paid With: Khalti</h6>
+                                            </div>
+                                            <div class="right-field">
+                                                <img src="{% static 'images/khalti-logo.png' %}" alt="">
+                                                <p>Amount:Rs. {{ins.created_by.payment_user.amount_in_rs}}</p>
+                                                <p> Payment Date: {{ins.created_by.payment_user.created_at|date:"M. d, Y"}}</p> 
+                                            </div>
+                                        </div>
+                                        {% elif ins.created_by.payment_user.paypal_payer_id %}
+                                        <div class="doc">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Paid With: Paypal</h6>
+                                            </div>
+                                            <div class="right-field">
+                                                <img src="{% static 'images/paypal.jpg' %}" alt="">
+                                                <p> Payment Date: {{ins.created_by.payment_user.created_at|date:"M. d, Y"}}</p>
+                                            </div>
+                                        </div>
+                                        {% elif not ins.created_by.payment_user %}
+                                        <div class="doc">
+                                            <div class="left-field">
+                                                <h6 class="heading-title">Payment Not Done</h6>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+
+                                
+                                
+                                {% if ins.verification == False %}
+                                <h6 class="verfication-text">
+                                    If the above information is correct proceed to verify
+                                </h6>
+                                    <div class="mb-3">                        
+                                    </div>
+                                    <div class="buttons">
+                                        <a href="{% url 'verify_ins_membership' id=ins.id %}"><button class="btn btn-primary">Verify</button></a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Recheck</button>
+                                    </div>
+                                {% endif %}
+                            
+                            <form action="{% url 'reject_ins_membership' id=ins.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="modal" tabindex="-1" id="exampleModal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Remarks(Write what should be corrected.)</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                <textarea name="remarks" id="" cols="30" rows="10" required></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Send for Recheck</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        
+                        </div>
+                        
+                    </div>
+    
+    
+                </div>
+    
+    
+    
+    
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
+         integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA=="
+         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    </body>
+</html>
+
+{% endblock %}

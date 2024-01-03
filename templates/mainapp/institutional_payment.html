@@ -1,0 +1,106 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    </head>
+  <body>
+
+<section id="new-member">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                
+                {% include 'base/sidebar.html' %}
+
+            </div>
+            <div class="col-md-10">
+                <div class="dashboard-mid-part">
+                    <div class="dashboard-content">
+                        <div class="mid-complain-heading">
+                        
+                            <div class="dash-header">
+                                <a onclick="goBack()" href="#" id="back-button">
+                                <div class="pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M13.7369 17.5254C13.6332 17.5256 13.5305 17.5052 13.4347 17.4655C13.3388 17.4259 13.2518 17.3677 13.1786 17.2942L8.44174 12.5574C8.29379 12.4092 8.21069 12.2084 8.21069 11.9991C8.21069 11.7897 8.29379 11.5889 8.44174 11.4408L13.1786 6.70392C13.3266 6.55584 13.5275 6.47266 13.7369 6.47266C13.9463 6.47266 14.1471 6.55584 14.2952 6.70392C14.4433 6.85199 14.5265 7.05282 14.5265 7.26223C14.5265 7.47164 14.4433 7.67248 14.2952 7.82055L10.1167 11.9997L14.2952 16.1776C14.4056 16.288 14.4809 16.4287 14.5113 16.5819C14.5418 16.735 14.5262 16.8938 14.4664 17.0381C14.4066 17.1823 14.3054 17.3056 14.1756 17.3924C14.0457 17.4791 13.8931 17.5254 13.7369 17.5254Z"
+                                            fill="black" />
+                                    </svg>
+                                </div></a>
+                                <div class="heading">
+                                    <p>Payment</p>
+                                </div>
+                            </div>    
+                        </div>
+
+                        {% for message in messages %}
+                        {% if message.tags == "success" %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% elif message.tags == "error" %}
+                        <div class="failed-message">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == "info" %}
+                        <div class="info-message">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <div class="payment-page">
+                            <div class="payment-info">
+                                <h3>Please Deposit an amount of Rs. 1,00,000 to continue Institutional Membership registration. </h3>
+                                <h5>Scan the QR below to pay:</h5>
+                                <div class="payment-detail">
+                                    <div class="pay-img">
+                                        <img src="{% static 'images/qrcode-logo.jpg' %}" alt="">
+                                        <form method="post" action="{% url 'institutional_payment' %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="member-details">
+                                                <div class="member-info2">
+                                                    <p class="required">Upload Payment Screen Shot/Voucher</p>
+                                                    <div class="inner-image">
+                                                        <input type="file" name="payment_ss" id="ss" accept="image/*" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="Submit">Submit</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="pay-khalti">
+                                                <div class="pay-in1">
+                                                    <h3>Account Details: </h3>
+                                                        <p>Account Name: Nepal Geotechnical Society</p>
+                                                        <p>Bank Name: Nabil Bank</p>
+                                                        <p>Branch: Pulchowk, Lalitpur</p>
+                                                        <p>Account Number: 1901017501614</p>
+                                                        <p>Swift Number: NBRBNPKA</p>
+                                                </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+
+{% endblock %}
