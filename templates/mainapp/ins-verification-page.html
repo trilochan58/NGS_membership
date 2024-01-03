@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="buttons">
                                         <a href="{% url 'verify_ins_membership' id=ins.id %}"><button class="btn btn-primary">Verify</button></a>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Recheck</button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Reject</button>
                                     </div>
                                 {% endif %}
                             
@@ -238,7 +238,7 @@
                                                 <h5 class="modal-title">Remarks(Write what should be corrected.)</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body tex-send">
                                                 
                                                 <textarea name="remarks" id="" cols="30" rows="10" required></textarea>
                                             </div>

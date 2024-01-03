@@ -52,15 +52,153 @@
         
                     {% if request.user.role == "A" %}
                     <a href="{% url 'gl_verification_list' %}" class="left-dash-item">
-                        <p>GLS Verification List</p>
+                        <p>Membership Requests</p>
                     </a>
 
                     <a href="{% url 'ins_verification_list' %}" class="left-dash-item">
-                        <p>Ins Verification List</p>
+                        <p>Ins Member Requests</p>
                     </a>
 
-                    <a href="" class="left-dash-item">
-                        <p>Upg Verification List</p>
+                    <a href="{% url 'upgrade' %}" class="left-dash-item">
+                        <p>Upgrade Members</p>
+                    </a>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Approved Members
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'general_approved' %}">General</a></li>
+                          <li><a class="dropdown-item" href="{% url 'institutional_approved' %}">Institutional</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Rejected Members
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'general_rejected' %}">General</a></li>
+                          <li><a class="dropdown-item" href="{% url 'institutional_rejected' %}">Institutional</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Mail
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'group_mail' %}">Send Mail</a></li>
+                          <li><a class="dropdown-item" href="{% url 'mail_lists' %}">Mail List</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Group
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'create_group' %}">Create Group</a></li>
+                          <li><a class="dropdown-item" href="{% url 'group_lists' %}">Group List</a></li>
+                        </ul>
+                    </div>                    
+
+                    {% endif %}
+
+                    <a href="{% url 'logout' %}" class="left-dash-item">
+                        <p>Logout</p>
+                    </a>
+                    
+                </div>
+               
+                <a href="https://kantipurinfotech.com/" target="_blank" class="kit-hover">
+                    <div class="internal-logo">
+                        <div class="logo-inner">
+                            <div class="kit-logo">
+                                <svg _ngcontent-serverApp-c30="" width="35" height="35" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="ng-tns-c30-1"><path _ngcontent-serverApp-c30="" fill-rule="evenodd" clip-rule="evenodd" d="M13.9999 0.494141L0.494141 13.9999L6.10453 19.6103L2.26124 23.4534L1.64403 24.0706L0.498322 25.2169L1.64479 26.3633L2.78707 27.5056L3.83149 26.4612C3.86817 26.4305 3.90371 26.3979 3.93811 26.3635L8.39791 21.9037L13.9999 27.5056L19.6063 21.8992L24.0706 26.3635C24.0866 26.3797 24.1028 26.3953 24.1193 26.4106L25.2146 27.5056L26.2689 26.4509C26.3009 26.4235 26.3329 26.3944 26.3626 26.3641C26.3923 26.3338 26.4218 26.3024 26.4494 26.2704L27.502 25.2176L26.4492 24.1648C26.4218 24.1329 26.3929 24.1014 26.3626 24.0712L21.8985 19.6071L27.5056 13.9999L13.9999 0.494141ZM19.6055 17.3141L22.9198 13.9999L13.9999 5.0802L5.08001 13.9999L8.39753 17.3174L14.0033 11.7119L19.6055 17.3141ZM10.6908 19.6107L13.9999 22.9198L17.3134 19.6063L14.0043 16.2972L10.6908 19.6107Z" fill="#2260bf" class="ng-tns-c30-1"></path></svg>
+                            </div>
+                        </div>
+    
+                        <div class="logo-inner2">
+                            <span>Developed by</span> <br>
+                            <p>Kantipur Infotech</p>
+                            <h2>www.kantipurinfotech.com</h2>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="side-bar">
+                <div class="off-btn">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-bars"></i></button>
+                </div>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Membership Portal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="left-dash-content">
+                <div class="left-dash-upper">
+                    <div class="logo">
+                        <a href="">
+                            <img src="{% static 'images/logo.png' %}" alt="">
+                        </a>
+                    </div>
+
+                    <a href="{% url 'dashboard' %}" class="left-dash-item">
+                        <p>Dashboard</p>
+                    </a>
+                    
+                    
+                    {% if request.user.role == "U" and request.user.is_verified == True%}
+                        {% if not request.user.institutional_user and not request.user.general_and_lifetime_user %}
+                        <a href="{% url 'new_membership_page' %}" class="left-dash-item">
+                            <p>New Membership</p>
+                        </a>
+                        {% endif %}
+                        {% if request.user.general_and_lifetime_user.rejected == True or request.user.institutional_user.rejected == True %}
+                        <a href="{% url 'remarks' %}" class="left-dash-item">
+                            <p class="required">Remarks</p>
+                        </a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% comment %} {% if request.user.general_and_lifetime_user.membership_type == "G" %}
+                        <a href="{% url 'upgrade_to_lifetime' %}" class="left-dash-item">
+                            <p>Upgrade to Lifetime</p>
+                        </a>
+                    {% endif %} {% endcomment %}
+                    {% if request.user.general_and_lifetime_user.membership_type == "G" or request.user.general_and_lifetime_user.membership_type == "L" or request.user.general_and_lifetime_user.membership_type == "S" %}
+                        <a href="{% url 'payment' %}" class="left-dash-item">
+                            <p>Payment</p>
+                        </a>
+                    {% endif %}
+                    {% if request.user.institutional_user %}
+                        <a href="{% url 'institutional_payment' %}" class="left-dash-item">
+                            <p>Institutional Payment</p>
+                        </a>
+                    {% endif %}
+                    
+                    {% if request.user.role == "U"%}
+                        <a href="{% url 'view_gl_details' %}" class="left-dash-item">
+                            <p>View Membership Details</p>
+                        </a>
+                    {% endif %}
+        
+                    {% if request.user.role == "A" %}
+                    <a href="{% url 'gl_verification_list' %}" class="left-dash-item">
+                        <p>GLS Member Request</p>
+                    </a>
+
+                    <a href="{% url 'ins_verification_list' %}" class="left-dash-item">
+                        <p>Ins Member Request</p>
+                    </a>
+
+                    <a href="{% url 'upgrade' %}" class="left-dash-item">
+                        <p>Upgrade Member</p>
                     </a>
 
                     <div class="dropdown left-drop">
@@ -107,6 +245,7 @@
                     </div>
                 </a>
 
+            </div>
             </div>
         </div>
 

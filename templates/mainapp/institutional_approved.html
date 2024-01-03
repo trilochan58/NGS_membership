@@ -44,7 +44,7 @@
                               </svg>
                           </div></a>
                           <div class="heading">
-                              <p>Institutional Membership verification list</p>
+                              <p>Approved Institutional Members list</p>
                           </div>
                       </div>
                     </div>
@@ -88,12 +88,7 @@
                                 <td>{{members.company_address}}</td>
                                 <td>{{members.registration_no}}</td>
                                 <td>
-                                  {% if members.verification == True %}
                                     <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
-                                  {% elif members.verification == False %}
-                                    <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
-                                  {% endif %}
-                    
                                 </td>
                                 <td>
                                 {% if members.created_by.payment_user %}
