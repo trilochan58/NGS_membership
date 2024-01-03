@@ -21,11 +21,6 @@
                             <p>New Membership</p>
                         </a>
                         {% endif %}
-                        {% if request.user.general_and_lifetime_user.rejected == True or request.user.institutional_user.rejected == True %}
-                        <a href="{% url 'remarks' %}" class="left-dash-item">
-                            <p class="required">Remarks</p>
-                        </a>
-                        {% endif %}
                     {% endif %}
 
                     {% comment %} {% if request.user.general_and_lifetime_user.membership_type == "G" %}
