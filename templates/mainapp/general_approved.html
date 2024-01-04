@@ -107,22 +107,22 @@
                               </tr>
                           </thead>
                           <tbody>
-                              {% for members in members_for_verification %}
+                              {% for approved_member in approved_members %}
                               <tr>
-                                  <td>1</td>
-                                  <td>{{members.name_of_applicant}}</td>
-                                  <td><b>{{members.get_membership_type_display}}</b></td>
+                                  <td>{{ forloop.counter }}</td>
+                                  <td>{{approved_member.name_of_applicant}}</td>
+                                  <td><b>{{approved_member.get_membership_type_display}}</b></td>
                                   <td>
                                       <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                   </td>
                                   <td>
-                                      {% if members.created_by.payment_user %}
-                                          <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">
+                                      {% if approved_member.created_by.payment_user.exists %}
+                                          <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{approved_member.id}}">
                                               Paid
                                           </button>
       
-                                          {% if members.created_by.payment_user.paid_amount_in_paisa %}
-                                          <div class="modal fade" id="staticBackdrop{{members.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          {% if approved_member.created_by.payment_user.paid_amount_in_paisa %}
+                                          <div class="modal fade" id="staticBackdrop{{approved_member.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                               <div class="modal-dialog modal-dialog-centered">
                                                   <div class="modal-content">
                                                   <div class="modal-header">
@@ -133,8 +133,8 @@
                                                     <div class="khalti" style="display: flex; align-items: center; flex-direction: column;">
                                                       <h4>Paid via khalti</h4>
                                                       <img src="https://i0.wp.com/www.merorojgari.com/wp-content/uploads/2022/02/Khalti-logo.png?fit=512%2C512&ssl=1" style="width:20%;" alt="" srcset="">
-                                                      <span><strong>Amount:</strong>Rs. {{members.created_by.payment_user.amount_in_rs}}</span>
-                                                      <span><strong>Payment Date:</strong>{{members.created_by.payment_user.created_at}}</span>
+                                                      <span><strong>Amount:</strong>Rs. {{approved_member.created_by.payment_user.amount_in_rs}}</span>
+                                                      <span><strong>Payment Date:</strong>{{approved_member.created_by.payment_user.created_at}}</span>
                                                     </div>
                                                   
                                                   </div>
@@ -144,8 +144,8 @@
                                                 </div>
                                               </div>
                                           </div>
-                                          {% elif members.created_by.payment_user.payment_ss != "" %}
-                                          <div class="modal fade" id="staticBackdrop{{members.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          {% elif approved_member.created_by.payment_user.payment_ss != "" %}
+                                          <div class="modal fade" id="staticBackdrop{{approved_member.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
@@ -155,10 +155,10 @@
                                                 <div class="modal-body">
                                                   <div class="ss" style="display: flex; align-items: center; flex-direction: column;">
                                                     <h4>Paid via QR-Code</h4>
-                                                    <a href="{{members.created_by.payment_user.payment_ss.url}}"  data-fancybox="payment" data-caption="Caption #1" style="display: flex; align-items: center; justify-content: center">
-                                                        <img src="{{members.created_by.payment_user.payment_ss.url}}" style="width:20%;" alt="" srcset="">
+                                                    <a href="{{approved_member.created_by.payment_user.payment_ss.url}}"  data-fancybox="payment" data-caption="Caption #1" style="display: flex; align-items: center; justify-content: center">
+                                                        <img src="{% if approved_member.created_by.payment_user.all %}{{ approved_member.created_by.get_latest_payment_url }}{% endif %}" style="width:20%;" alt="" srcset="">
                                                     </a>
-                                                    <span><strong>Payment Date:</strong>{{members.created_by.payment_user.created_at}}</span>
+                                                    <span><strong>Payment Date:</strong>{{approved_member.created_by.payment_user.created_at}}</span>
                                                   </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -167,8 +167,8 @@
                                               </div>
                                             </div>
                                           </div>
-                                          {% elif members.created_by.payment_user.paypal_payer_id %}
-                                          <div class="modal fade" id="staticBackdrop{{members.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          {% elif approved_member.created_by.payment_user.paypal_payer_id %}
+                                          <div class="modal fade" id="staticBackdrop{{approved_member.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
@@ -179,7 +179,7 @@
                                                   <div class="khalti" style="display: flex; align-items: center; flex-direction: column;">
                                                     <h4>Paid via Paypal</h4>
                                                     <img src="{% static 'images/paypal-logo.png' %}" style="width:20%;" alt="" srcset="">
-                                                    <span><strong>Payment Date:</strong>{{members.created_by.payment_user.created_at}}</span>
+                                                    <span><strong>Payment Date:</strong>{{approved_member.created_by.payment_user.created_at}}</span>
                                                   </div>
                                                 
                                                 </div>
@@ -192,7 +192,7 @@
                                           {% endif %}
                                       {% endif %}
       
-                                      {% if not members.created_by.payment_user %}
+                                      {% if not approved_member.created_by.payment_user.exists %}
                                           <button type="button" class="btn btn-primary unpaid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdroph1">
                                               Not Paid
                                           </button>
@@ -218,8 +218,8 @@
                                       {% endif %}
                                       </td>
                                   <td class="action-tab">
-                                      <a href="{% url 'gl_verification_page' id=members.id %}"><i class="fa-regular fa-eye"></i></a>
-                                      <a href="{% url 'edit_gl_membership' id=members.id %}"><i class="fa-regular fa-pen-to-square"></i></a>
+                                      <a href="{% url 'gl_verification_page' id=approved_member.id %}"><i class="fa-regular fa-eye"></i></a>
+                                      <a href="{% url 'edit_gl_membership' id=approved_member.id %}"><i class="fa-regular fa-pen-to-square"></i></a>
                                   </td>
                               </tr>
                               {% endfor %}

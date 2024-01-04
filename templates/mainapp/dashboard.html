@@ -184,11 +184,11 @@
                             <div class="dashboard-content mt-3">
                                 <div class="upgrade">
                                     <h3>Upgrade to Lifetime Membership:</h3>
-                                    <a href=""> 
-                                       <form action="">
-                                            <button type="submit">Upgrade</button>
+                                       <form action="{% url 'upgrade_request_form' %}" method="post">
+                                        {% csrf_token %}
+                                        <a href="{% url 'payment'%}"> <button type="submit">Upgrade</button></a>
                                        </form>
-                                    </a>
+                            
                                 </div> 
                             </div>
                             {% endif %}

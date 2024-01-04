@@ -78,6 +78,8 @@ urlpatterns = [
     path('general-approved',views.general_approved, name='general_approved'),
     path('institutional-approved',views.institutional_approved, name='institutional_approved'),
     path('general-rejected',views.general_rejected, name='general_rejected'),
+    path('upgrade-request',views.upgrade_request_form,name='upgrade_request_form'),
+    path('upgrade-to-lifetime/<int:id>',views.upgrade_to_lifetime,name='upgrade_to_lifetime'),
 
     path('institutional-rejected',views.institutional_rejected, name='institutional_rejected'),
 

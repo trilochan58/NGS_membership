@@ -81,12 +81,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for members in members_for_verification %}
+                            {% for approved_ins_member in approved_ins_members %}
                             <tr>
-                                <td>{{members.id}}</td>
-                                <td>{{members.company_name}}</td>
-                                <td>{{members.company_address}}</td>
-                                <td>{{members.registration_no}}</td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{approved_ins_member.company_name}}</td>
+                                <td>{{approved_ins_member.company_address}}</td>
+                                <td>{{approved_ins_member.registration_no}}</td>
                                 <td>
                                     <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                 </td>
@@ -96,8 +96,8 @@
                                         Paid
                                     </button>
 
-                                    {% if members.created_by.payment_user.payment_ss == "" %}
-                                    <div class="modal fade" id="staticBackdrop{{members.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    {% if approved_ins_member.created_by.payment_user.payment_ss == "" %}
+                                    <div class="modal fade" id="staticBackdrop{{approved_ins_member.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                             <div class="modal-header">
@@ -108,8 +108,8 @@
                                               <div class="khalti" style="display: flex; align-items: center; flex-direction: column;">
                                                 <h4>Paid via khalti</h4>
                                                 <img src="https://i0.wp.com/www.merorojgari.com/wp-content/uploads/2022/02/Khalti-logo.png?fit=512%2C512&ssl=1" style="width:20%;" alt="" srcset="">
-                                                <span><strong>Amount:</strong>Rs. {{members.created_by.payment_user.amount_in_rs}}</span>
-                                                <span><strong>Payment Date:</strong>{{members.created_by.payment_user.created_at}}</span>
+                                                <span><strong>Amount:</strong>Rs. {{approved_ins_member.created_by.payment_user.amount_in_rs}}</span>
+                                                <span><strong>Payment Date:</strong>{{approved_ins_member.created_by.payment_user.created_at}}</span>
                                               </div>
                                             
                                             </div>
@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                     {% else %}
-                                    <div class="modal fade" id="staticBackdrop{{members.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal fade" id="staticBackdrop{{approved_ins_member.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                       <div class="modal-dialog modal-dialog-centered">
                                           <div class="modal-content">
                                           <div class="modal-header">
@@ -130,10 +130,10 @@
                                           <div class="modal-body">
                                             <div class="ss" style="display: flex; align-items: center; flex-direction: column;">
                                               <h4>Paid via QR-Code</h4>
-                                              <a href="{{members.created_by.payment_user.payment_ss.url}}" data-fancybox="payment" data-caption="Payment" style="display: flex; align-items: center; justify-content: center">
-                                                  <img src="{{members.created_by.payment_user.payment_ss.url}}" style="width:20%;" alt="" srcset="">
+                                              <a href="{{approved_ins_member.created_by.payment_user.payment_ss.url}}" data-fancybox="payment" data-caption="Payment" style="display: flex; align-items: center; justify-content: center">
+                                                  <img src="{{approved_ins_member.created_by.payment_user.payment_ss.url}}" style="width:20%;" alt="" srcset="">
                                               </a>
-                                              <span><strong>Payment Date:</strong>{{members.created_by.payment_user.created_at}}</span>
+                                              <span><strong>Payment Date:</strong>{{approved_ins_member.created_by.payment_user.created_at}}</span>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -145,7 +145,7 @@
                                   {% endif %}
                                 {% endif %}
 
-                                {% if not members.created_by.payment_user %}
+                                {% if not approved_ins_member.created_by.payment_user %}
                                     <button type="button" class="btn btn-primary unpaid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdroph1">
                                         Not Paid
                                     </button>
@@ -172,8 +172,8 @@
                                 </td>
 
                                 <td class="action-tab">
-                                    <a href="{% url 'ins_verification_page' id=members.id %}"><i class="fa-regular fa-eye"></i></a>
-                                    <a href="{% url 'edit_ins_membership' id=members.id %}"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href="{% url 'ins_verification_page' id=approved_ins_member.id %}"><i class="fa-regular fa-eye"></i></a>
+                                    <a href="{% url 'edit_ins_membership' id=approved_ins_member.id %}"><i class="fa-regular fa-pen-to-square"></i></a>
                                 </td>
                             </tr>
                             {% endfor %}
