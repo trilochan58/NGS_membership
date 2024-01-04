@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
          integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
+         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 </head>
 
 <body>
@@ -67,7 +68,7 @@
                     {% endfor %}
                   
                     <div class="general-table">
-                    <table id="example" class="display container" style="width:100%">
+                    <table id="main_list" class="display container" style="width:100%">
                         <thead>
                             <tr>
                                 <th>SN.</th>
@@ -103,13 +104,31 @@
 
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.js">
-
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <script>
-        new DataTable('#example');
+      var table = $('#main_list').DataTable( {
+        dom: 'Bfrtpl',
+        language: {
+          info: '',
+          lengthMenu: 'Show _MENU_ entries',
+      },
+          "lengthMenu": [ 
+            [10, 25, 50, -1], 
+            [10, 25, 50, "All"] 
+          ],
+          
+        buttons: [
+            'excelHtml5',
+        ],
+      } );
+
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"

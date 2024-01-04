@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
          integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 </head>
 
 <body>
@@ -44,7 +45,7 @@
                               </svg>
                           </div></a>
                           <div class="heading">
-                              <p>Institutional Membership verification list</p>
+                              <p>Institutional Membership Request List</p>
                           </div>
                       </div>
                     </div>
@@ -67,7 +68,7 @@
                     {% endfor %}
                   
                     <div class="general-table">
-                      <table id="example" class="display container" style="width:100%">
+                      <table id="ins_member" class="display container" style="width:100%">
                         <thead>
                             <tr>
                                 <th>S.No.</th>
@@ -75,7 +76,11 @@
                                 <th>Company Address</th>
                                 <th>Registration No</th>
                                 <th>Verification</th>
-                                <th>Status</th>
+                                <th class="hide">Website</th>
+                                <th class="hide">Working Field</th>
+                                <th class="hide">Contact Person</th>
+                                <th class="hide">Contact Number</th>
+                                <th>Payment</th>
                                 <th>Action</th>
 
                             </tr>
@@ -89,12 +94,18 @@
                                 <td>{{members.registration_no}}</td>
                                 <td>
                                   {% if members.verification == True %}
+                                    <p class="hide">Verified</p>
                                     <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                   {% elif members.verification == False %}
+                                      <p class="hide">Not Verified</p>
                                     <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
                                   {% endif %}
                     
                                 </td>
+                                <td class="hide">www.hello.com</td>
+                                <td class="hide">IT</td>
+                                <td class="hide">CEO</td>
+                                <th class="hide">9854752565</th>
                                 <td>
                                 {% if members.created_by.payment_user %}
                                     <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">
@@ -200,17 +211,33 @@
 
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.js">
-
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 
     <script>
-          $('#example').dataTable( {
-              "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
-          } );
-      </script>
+      var table = $('#ins_member').DataTable( {
+        dom: 'Bfrtpl',
+        language: {
+          info: '',
+          lengthMenu: 'Show _MENU_ entries',
+      },
+          "lengthMenu": [ 
+            [10, 25, 50, -1], 
+            [10, 25, 50, "All"] 
+          ],
+          
+        buttons: [
+            'excelHtml5',
+        ],
+      } );
+
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
     integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA=="

@@ -963,6 +963,7 @@ a.complain1 {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  overflow: hidden;
 }
 
 .name {
@@ -2619,10 +2620,17 @@ h4.edu-head {
 /* table */
 
 
-table.dataTable tbody tr:nth-child(even) {
-  
+.dataTables_length {
+  margin-top: 10px;
 }
 
+div.dt-buttons {
+  float: right !important;
+}
+
+.dataTables_filter {
+  float: left !important;
+}
 
 table.dataTable{
   padding: 10px 0px;
@@ -3191,7 +3199,7 @@ button.unpaid-btn:hover {
 }
 
 .right-field img {
-  width: 120px;
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -3421,6 +3429,15 @@ textarea.form-control {
 .tex-send .btn-primary:hover {
   background: var(--Pra-Black);
   border: var(--Pra-Black);
+}
+
+.hide {
+  display: none !important;
+}
+
+.add-admin .register-content{
+  transform: translate(0%, 2%);
+  box-shadow: none !important;
 }
 
 /* Responsive */
