@@ -11,6 +11,8 @@ urlpatterns = [
     path("change-password/", views.change_password, name="change_password"),
     path("edit-profile/", views.edit_profile, name="edit_profile"),
     path("verify-user/", views.verify_user, name="verify_user"),
+    path("admin-create-admin",views.add_admin,name="add_admin"),
+    path('admin-list',views.admin_list,name='admin_list'),
     # url paths for password resetting
     path(
         "password_reset/",

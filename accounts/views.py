@@ -69,6 +69,58 @@ def sign_up(request):
         form = SignUpForm()
     return render(request, "auth/signup.html")
 
+@login_required
+def add_admin(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+            first_name = form.cleaned_data.get("first_name")
+            last_name = form.cleaned_data.get("last_name")
+            email = form.cleaned_data.get("email").lower()
+            phone = form.cleaned_data.get("phone")
+            password = form.cleaned_data.get("password")
+            confirm_password = form.cleaned_data.get("confirm_password")
+
+            if CustomUser.objects.filter(email=email).exists():
+                messages.error(request, "User with this email already exists")
+                return render(request, "auth/signup.html", {"form": form})
+            if CustomUser.objects.filter(phone=phone).exists():
+                messages.error(request, "User with this phone number already exists")
+                return render(request, "auth/signup.html", {"form": form})
+            if password != confirm_password:
+                messages.error(request, "Password didn't match!")
+                return render(request, "auth/signup.html", {"form": form})
+            if len(password) < 5:
+                messages.error(request, "Password is too short.")
+                return render(request, "auth/signup.html", {"form": form})
+
+            new_user = CustomUser.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone=phone,
+                password=make_password(password),
+                role="A",
+            )
+            messages.success(
+                request,
+                f"Admin with email {new_user.email} has been created.",
+            )
+            
+            return redirect("admin_list")   
+        else:
+            messages.error(request, "Please fill the form with correct details")
+            return render(request, "auth/add_admin.html", {"form": form})
+    else:
+        form = SignUpForm()
+    return render(request, "auth/add_admin.html")
+def admin_list(request):
+    admin_list=CustomUser.objects.filter(role='A')
+    context={
+        'admin_list':admin_list
+    }
+    return render(request,'auth/admin_list.html',context)
 
 @user_login_check
 def login_page(request):
