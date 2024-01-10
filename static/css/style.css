@@ -28,6 +28,8 @@ body {
 
 /* Nav Bar */
 
+
+
 .main-bar {
   display: none;
 }
@@ -1433,6 +1435,7 @@ a.complain1 {
 
 .login-logo {
   text-align: center;
+  background: var(--Pra-White);
 }
 
 .login-right {
@@ -2641,6 +2644,7 @@ div#example_wrapper {
 }
 
 table.dataTable  th{
+  padding: 3px 10px;
   border: 0px;
   border-bottom: 1px solid rgba(228, 228, 228, 0.5);
   text-align: center !important;
@@ -3221,6 +3225,7 @@ button.unpaid-btn:hover {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .text-end button{
@@ -3317,16 +3322,15 @@ button.unpaid-btn:hover {
 }
 
 .select2-container--default .select2-selection--multiple {
-  height: 50px;
+  min-height: 50px !important;
+  height: 100% !important;
 }
+
 
 table.dataTable tbody td {
-  padding: 3px 0px !important;
+  padding: 3px 10px !important;
 }
 
-table.dataTable  thead th:not(:first-child) {
-  padding: 0px !important;
-}
 
 
 .save-card button {
@@ -3494,16 +3498,14 @@ textarea.form-control {
 	}
 
 	.right-part-log {
-    height: 93%;
-		background: url(../image/Vector.svg);
-		background-repeat: no-repeat;
-		background-position-x: right;
 		background-color: var(--Pra-Yellow);
 		width: 100%;
 	}
 
 	.login-button button {
-		border: 2px solid #fff !important;
+		border: 2px solid #000 !important;
+    background: var(--Pra-Black);
+    color: var(--Pra-White);
 	}
 
 	.login-signup a {
@@ -3583,7 +3585,7 @@ textarea.form-control {
 	}
 
 	.mid-complain-heading {
-    margin-top: 45px !important;
+    margin-top: 30px !important;
 		height: auto !important;
 		padding: 5px !important;
 	}
@@ -3849,10 +3851,6 @@ textarea.form-control {
 
   #dashboard .card-button .card-button-right .btn {
     padding: 0px 10px !important;
-  }
-
-  .right-part-log {
-    height: 94.3vh !important;
   }
 
   .accordion {
