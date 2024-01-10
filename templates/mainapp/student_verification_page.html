@@ -230,9 +230,17 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                        
-                        
+                            {% if gl.upgrade_request == True %}
+                          <form action="{% url 'upgrade_to_lifetime' id=gl.id %}"method='post'>
+                            {% csrf_token %}
+                              
+                               <div class="buttons">
+                                <button type="submit" class="btn btn-primary">Upgrade</button>
+                            </div>
+                        </form>
+                         {% endif %}
                                 {% if gl.verification == False %}
+
                                 <h6 class="verfication-text">
                                     If the above information is correct proceed to verify
                                 </h6>

@@ -28,7 +28,7 @@
                             <p>Upgrade to Lifetime</p>
                         </a>
                     {% endif %} {% endcomment %}
-                    {% if request.user.general_and_lifetime_user.membership_type == "G" or request.user.general_and_lifetime_user.membership_type == "L" or request.user.general_and_lifetime_user.membership_type == "S" %}
+                    {% if request.user.general_and_lifetime_user.membership_type == "G" or request.user.general_and_lifetime_user.membership_type == "S" %}
                         <a href="{% url 'payment' %}" class="left-dash-item">
                             <p>Payment</p>
                         </a>

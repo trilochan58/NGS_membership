@@ -28,3 +28,7 @@ class CustomUser(AbstractUser):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def get_latest_payment_url(self):
+        latest_payment = self.payment_user.latest('created_at')
+        return latest_payment.payment_ss.url

@@ -50,12 +50,12 @@ def sign_up(request):
                 token=str(generate_unique_four_digit_number()),
             )
 
-            # try:
-            subject="Verify your account."
-            message=f"Your pin is {new_user.token}. Login with your new account and enter this pin to verify."
-            send_token_mail.delay(new_user.email,subject,message)
-            # except:
-            #     messages.success(request, f"Your pin is {new_user.token}")
+            try:
+                subject="Verify your account."
+                message=f"Your pin is {new_user.token}. Login with your new account and enter this pin to verify."
+                send_token_mail.delay(new_user.email,subject,message)
+            except:
+                messages.success(request, f"Your pin is {new_user.token}")
             messages.success(
                 request,
                 "Your account has been created.",

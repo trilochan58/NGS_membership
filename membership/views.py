@@ -3,6 +3,7 @@ import requests
 import json
 import uuid
 from datetime import datetime
+from django.db.models import Q
 from pprint import pprint
 
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
@@ -164,7 +165,7 @@ def payment_page(request):
     """Handles the payment for individual users."""
     host = request.get_host()
     try:
-        if request.user.payment_user:
+        if (request.user.payment_user.exists() and request.user.general_and_lifetime_user.upgrade_request == False):
             return redirect("dashboard")
     except:
         pass
@@ -191,7 +192,7 @@ def payment_page(request):
     return_url = f"http://{host}/paypal-success-page/"
     cancel_url = f"http://{host}/payment-failed/"
 
-    if request.user.general_and_lifetime_user.membership_type == "G":
+    if (request.user.general_and_lifetime_user.membership_type == "G" and request.user.general_and_lifetime_user.upgrade_request == False):
         paypal_general_checkout = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": currency_rates(2000),
@@ -209,7 +210,7 @@ def payment_page(request):
             "paypal": paypal_payment,
         }
         return render(request, "mainapp/general_payment.html", context)
-    elif request.user.general_and_lifetime_user.membership_type == "L":
+    elif (request.user.general_and_lifetime_user.membership_type == "L" or request.user.general_and_lifetime_user.upgrade_request == True):
         paypal_lifetime_checkout = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": currency_rates(10000),
@@ -278,7 +279,7 @@ def institutional_payment_page(request):
 
 @admin_only
 def general_and_lifetime_membership_verification_list(request):
-    members_for_verification = GeneralAndLifetimeMembership.objects.all().order_by(
+    members_for_verification = GeneralAndLifetimeMembership.objects.filter(Q(verification=False) & Q(rejected=False) & Q(upgrade_request=False)).order_by(
         "-id"
     )
     context = {"members_for_verification": members_for_verification}
@@ -325,10 +326,12 @@ def verify_general_or_lifetime_membership(request, id):
             verify_object.verified_date = datetime.now()
             verify_object.save()
             messages.success(request, "Membership Verified")
-            subject="Your account has been verified."
-            message=f"Yor membership for Nepal Geotechnical Society is verified now."
-            send_token_mail.delay(verify_object.created_by.email,subject,message)
-            return redirect("gl_verification_list")
+            try:
+                subject="Your account has been verified."
+                message=f"Yor membership for Nepal Geotechnical Society is verified now."
+                send_token_mail.delay(verify_object.created_by.email,subject,message)
+            finally:
+                return redirect("gl_verification_list")
         else:
             messages.error(
                 request,
@@ -339,7 +342,7 @@ def verify_general_or_lifetime_membership(request, id):
 
 @admin_only
 def institutional_membership_verification_list(request):
-    members_for_verification = InstitutionalMembership.objects.all().order_by("-id")
+    members_for_verification = InstitutionalMembership.objects.filter(Q(verification=False) & Q(rejected=False)).order_by("-id")
     context = {"members_for_verification": members_for_verification}
     return render(request, "mainapp/ins_membership_list.html", context)
 
@@ -489,12 +492,6 @@ def remarks(request):
 @login_required
 def no_remarks(request):
     return render(request, "mainapp/remarks.html")
-
-
-@login_required
-def upgrade_to_lifetime(request):
-    return render(request, "mainapp/upgrade_to_lifetime.html")
-
 
 @login_required
 def edit_student_membership(request, id):
@@ -869,15 +866,50 @@ def edit_stored_mail(request, id):
     return render(request, "mainapp/edit_mail.html", context)
 
 
+def upgrade_request_form(request):
+    user=request.user
+    general_and_lifetime_user = get_object_or_404(GeneralAndLifetimeMembership, created_by=user)
+    if request.method == 'POST':
+        general_and_lifetime_user.upgrade_request=True
+        general_and_lifetime_user.save()
+        return redirect('payment')
 def upgrade(request):
-    return render(request, 'mainapp/upgrade.html')
+    upgrade_requests=GeneralAndLifetimeMembership.objects.filter(upgrade_request=True).order_by("-id")
+    context={
+        'upgrade_requests':upgrade_requests
+    }
+    return render(request, 'mainapp/upgrade.html',context)
+
+def upgrade_to_lifetime(request,id):
+    member = get_object_or_404(GeneralAndLifetimeMembership,id=id)
+    if request.method=='POST':
+        member.membership_type='L'
+        member.upgrade_request= None
+        member.save()
+        return redirect('upgrade')
 
 def general_approved(request):
-    return render(request, 'mainapp/general_approved.html')
+    approved_members = GeneralAndLifetimeMembership.objects.filter(verification=True).order_by("-id")
+    context={
+        'approved_members': approved_members
+    }
+    return render(request, 'mainapp/general_approved.html',context)
 
 def institutional_approved(request):
-    return render(request, 'mainapp/institutional_approved.html')
+    approved_ins_members = InstitutionalMembership.objects.filter(verification=True).order_by("-id")
+    context={
+        'approved_ins_members':approved_ins_members
+    }
+    return render(request, 'mainapp/institutional_approved.html',context)
 def general_rejected(request):
-    return render(request, 'mainapp/general_rejected.html')
+    rejected_members = GeneralAndLifetimeMembership.objects.filter(rejected=True).order_by("-id")
+    context={
+        'rejected_members' : rejected_members
+    }
+    return render(request, 'mainapp/general_rejected.html',context)
 def institutional_rejected(request):
-    return render(request, 'mainapp/institutional_rejected.html')
+    rejected_ins_members = InstitutionalMembership.objects.filter(rejected=True).order_by("-id")
+    context={
+       ' rejected_ins_members':rejected_ins_members
+    }
+    return render(request, 'mainapp/institutional_rejected.html',context)
