@@ -309,6 +309,7 @@
                                 {% endif %}
                         
                                 {% if gl.verification == False %}
+                                {% if gl.rejected == False %}
                                 <h6 class="verfication-text">
                                     If the above information is correct proceed to verify
                                 </h6>
@@ -332,6 +333,7 @@
                                 </form>
                                 
                                 <p>The latest membership no is "{{latest_membership_no}}"</p>
+                                {% endif %}
                                 {% endif %}
                             
                             <form action="{% url 'reject_gl_membership' id=gl.id %}" method="post">

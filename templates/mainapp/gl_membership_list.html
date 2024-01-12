@@ -127,7 +127,7 @@
                           <tbody>
                               {% for members in members_for_verification %}
                               <tr>
-                                  <td>1</td>
+                                  <td>{{ forloop.counter }}</td>
                                   <td>{{members.name_of_applicant}}</td>
                                   <td><b>{{members.get_membership_type_display}}</b></td>
                                   <td>
@@ -139,13 +139,13 @@
                                       <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
                                     {% endif %}
                                   </td>
-                                  <td class="hide">2001/11/11</td>
-                                  <td class="hide">Male</td>
-                                  <td class="hide">Lokanthali, Bhaktapur</td>
-                                  <td class="hide">KIT</td>
-                                  <td class="hide">Nepali</td>
-                                  <td class="hide">7588</td>
-                                  <td class="hide">Bhaktapur</td>
+                                  <td class="hide">{{ members.dob }}</td>
+                                  <td class="hide">{{ members.gender }}</td>
+                                  <td class="hide">{{ members.permanent_address }}r</td>
+                                  <td class="hide">{{ members.affiliation }}</td>
+                                  <td class="hide">{{ members.nationality }}</td>
+                                  <td class="hide">{{ members.citizenship_card_no }}</td>
+                                  <td class="hide">{{ members.issued_from }}</td>
                                   <td>
                                       {% if members.created_by.payment_user %}
                                           <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">

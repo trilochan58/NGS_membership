@@ -23,6 +23,11 @@ class GeneralAndLifetimeMembershipForm(forms.ModelForm):
             "expected_pass_year",
             "college_id_card",
         ]
+    def update(self,instance):
+        for field_name, field_value in self.cleaned_data.items():
+            setattr(instance, field_name, field_value)
+        instance.save()
+        
 
 
 class PaymentForm(forms.ModelForm):

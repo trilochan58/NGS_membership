@@ -62,23 +62,38 @@ def dashboard(request):
     return render(request, "mainapp/dashboard.html", context)
 
 
-@only_verified_users_without_any_membership
-def new_membership_page(request):
+# @only_verified_users_without_any_membership
+def new_membership_page(request,id=None):
+    user=request.user
+    instance=None
     gender = choices.GENDER_CHOICES
     countries = choices.COUNTRY_CHOICES
     student_level = choices.STUDENT_LEVEL_CHOICES
     salutation = choices.SALUTATION_CHOICES
     districts = choices.DISTRICT_CHOICES
-
+    if id:
+        if user.general_and_lifetime_user:
+            if user.general_and_lifetime_user.membership_type == 'L':
+                model_instance = get_object_or_404(GeneralAndLifetimeMembership,id=id)
+            if user.general_and_lifetime_user.membership_type == 'S':
+                model_instance = get_object_or_404(GeneralAndLifetimeMembership,id=id)
+            if user.general_and_lifetime_user.membership_type == 'G':
+                model_instance = get_object_or_404(GeneralAndLifetimeMembership,id=id)
+        else:
+            model_instance=get_object_or_404(InstitutionalMembership,id=id)
+        instance=model_instance
     if request.method == "POST":
         form_name = request.POST.get("form_name")
-
         if form_name == "general_membership_form":
-            form = GeneralAndLifetimeMembershipForm(request.POST, request.FILES)
+            form = GeneralAndLifetimeMembershipForm(request.POST, request.FILES,instance=instance)
             if form.is_valid():
-                GeneralAndLifetimeMembership.objects.create(
+                if instance:
+                    print(form.permanent_address)
+                    form.update(instance)
+                else:
+                    GeneralAndLifetimeMembership.objects.create(
                     created_by=request.user, membership_type="G", **form.cleaned_data
-                )
+                    )
                 return redirect("payment")
             else:
                 messages.error(
@@ -91,15 +106,20 @@ def new_membership_page(request):
                     "salutation": salutation,
                     "districts": districts,
                     "form": form,
+                    "instance": instance
                 }
                 return render(request, "mainapp/new-member.html", general_context)
 
         elif form_name == "lifetime_membership_form":
-            form = GeneralAndLifetimeMembershipForm(request.POST, request.FILES)
+            form = GeneralAndLifetimeMembershipForm(request.POST, request.FILES,instance=instance)
             if form.is_valid():
-                GeneralAndLifetimeMembership.objects.create(
-                    created_by=request.user, membership_type="L", **form.cleaned_data
-                )
+                if instance:
+                    print(form.permanent_address)
+                    form.update(instance)
+                else:
+                    GeneralAndLifetimeMembership.objects.get_or_create(
+                        created_by=request.user, membership_type="L", **form.cleaned_data
+                    )
                 return redirect("payment")
             else:
                 messages.error(
@@ -112,15 +132,19 @@ def new_membership_page(request):
                     "salutation": salutation,
                     "districts": districts,
                     "form": form,
+                    "instance":instance
                 }
                 return render(request, "mainapp/new-member.html", lifetime_context)
 
         elif form_name == "student_membership_form":
-            form = StudentMembershipForm(request.POST, request.FILES)
+            form = StudentMembershipForm(request.POST, request.FILES,instance=instance)
             if form.is_valid():
-                GeneralAndLifetimeMembership.objects.create(
-                    created_by=request.user, membership_type="S", **form.cleaned_data
-                )
+                if instance:
+                    form.save()
+                else:
+                    GeneralAndLifetimeMembership.objects.create(
+                        created_by=request.user, membership_type="S", **form.cleaned_data
+                    )
                 return redirect("payment")
             else:
                 messages.error(
@@ -133,15 +157,19 @@ def new_membership_page(request):
                     "salutation": salutation,
                     "districts": districts,
                     "form": form,
+                    "instance": instance
                 }
                 return render(request, "mainapp/new-member.html", student_context)
 
         elif form_name == "institutional_membership_form":
-            form = InstitutionalMembershipForm(request.POST, request.FILES)
+            form = InstitutionalMembershipForm(request.POST, request.FILES,instance=instance)
             if form.is_valid():
-                InstitutionalMembership.objects.create(
-                    created_by=request.user, **form.cleaned_data
-                )
+                if instance:
+                    form.save()
+                else:
+                    InstitutionalMembership.objects.create(
+                        created_by=request.user, **form.cleaned_data
+                    )
                 return redirect("institutional_payment")
             else:
                 print(form.errors)
@@ -279,9 +307,9 @@ def institutional_payment_page(request):
 
 @admin_only
 def general_and_lifetime_membership_verification_list(request):
-    members_for_verification = GeneralAndLifetimeMembership.objects.filter(Q(verification=False) & Q(rejected=False) & Q(upgrade_request=False)).order_by(
-        "-id"
-    )
+    members_for_verification = GeneralAndLifetimeMembership.objects.filter((Q(verification=False) & Q(rejected=False)) & 
+                                                                           (Q(upgrade_request = False) | Q(upgrade_request = None))).order_by("-id"
+                                                                            )
     context = {"members_for_verification": members_for_verification}
     return render(request, "mainapp/gl_membership_list.html", context)
 
@@ -329,7 +357,7 @@ def verify_general_or_lifetime_membership(request, id):
             try:
                 subject="Your account has been verified."
                 message=f"Yor membership for Nepal Geotechnical Society is verified now."
-                send_token_mail.delay(verify_object.created_by.email,subject,message)
+                send_token_mail(verify_object.created_by.email,subject,message)
             finally:
                 return redirect("gl_verification_list")
         else:
@@ -364,7 +392,7 @@ def verify_institution_membership(request, id):
     verify_object.save()
     subject="Membership verified."
     message=f"Yor membership for Nepal Geotechnical Society is verified now."
-    send_token_mail.delay(verify_object.created_by.email,subject,message)
+    send_token_mail(verify_object.created_by.email,subject,message)
     messages.success(request, "Membership Verified")
     return redirect("ins_verification_list")
 
@@ -466,7 +494,7 @@ def reject_gl_membership(request, id):
             instance.rejected = True
             subject="Your Account is rejected.(NGS)"
             message=form.cleaned_data.get("remarks")
-            send_token_mail.delay(instance.created_by.email,subject,message)
+            send_token_mail(instance.created_by.email,subject,message)
             instance.save()
             return redirect("gl_verification_list")
 

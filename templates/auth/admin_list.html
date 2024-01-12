@@ -63,7 +63,22 @@
                             <a href="{% url 'add_admin' %}"> <button class="w-100"> Add Admin</button></a>
                         </div>
                     </div>
-
+                      
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                <div class="success-message">
+                    {{message}}
+                </div>
+                {% elif message.tags == "error" %}
+                <div class="failed-message">
+                    {{message}}
+                </div>
+                {% elif message.tags == "info" %}
+                <div class="info-message">
+                    {{message}}
+                </div>
+                {% endif %}
+                {% endfor %}
                       <div class="general-table">
                         
                         <table id="general-approved" class="display container" style="width:100%; overflow-x: scroll;">
@@ -77,13 +92,14 @@
                               </tr>
                           </thead>
                           <tbody>
+                              {% for admin in admin_list %}
                               <tr>
-                                  <td>1</td>
-                                  <td>Trilochan Adhikari</td>
-                                  <td>triload@gmail.com</td>
-                                  <td>9851240022</td>
+                                  <td>{{ forloop.counter }}</td>
+                                  <td>{{ admin.full_name }}</td>
+                                  <td>{{ admin.email }}</td>
+                                  <td>{{ admin.phone}}</td>
                               </tr>
-                           
+                           {% endfor %}
                           </tbody>
                           </div>
                       </table>

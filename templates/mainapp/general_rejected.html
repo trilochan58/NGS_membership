@@ -125,16 +125,16 @@
                                     <p class="hide">Not Verified</p>
                                       <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(198, 40, 40); font-size: 18px;"></i>
                                   </td>
-                                  <td class="hide">2001/11/11</td>
-                                  <td class="hide">Male</td>
-                                  <td class="hide">Lokanthali, Bhaktapur</td>
-                                  <td class="hide">KIT</td>
-                                  <td class="hide">Nepali</td>
-                                  <td class="hide">7588</td>
-                                  <td class="hide">Bhaktapur</td>
+                                  <td class="hide">{{ rejected_member.dob }}</td>
+                                  <td class="hide">{{ rejected_member.gender }}</td>
+                                  <td class="hide">{{ rejected_member.permanent_address }}r</td>
+                                  <td class="hide">{{ rejected_member.affiliation }}</td>
+                                  <td class="hide">{{ rejected_member.nationality }}</td>
+                                  <td class="hide">{{ rejected_member.citizenship_card_no }}</td>
+                                  <td class="hide">{{ rejected_member.issued_from }}</td>
                                   <td>
                                       {% if rejected_member.created_by.payment_user %}
-                                          <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">
+                                          <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{rejected_member.id}}">
                                               Paid
                                           </button>
       

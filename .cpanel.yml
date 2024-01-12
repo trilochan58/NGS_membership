@@ -1,6 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/kantggjb/oms/ #this is original
+    - export DEPLOYPATH=/home/kantggjb/repositories/NGS_membership/ #this is original
     - /bin/cp -r accounts $DEPLOYPATH
     # - /bin/cp -r config $DEPLOYPATH
     - /bin/cp -r membership $DEPLOYPATH

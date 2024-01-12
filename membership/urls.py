@@ -8,6 +8,7 @@ from . import views, api
 urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("new-membership-page/", views.new_membership_page, name="new_membership_page"),
+    path("edit-membership-page/<int:id>", views.new_membership_page, name="edit_membership"),
     path("payment/", views.payment_page, name="payment"),
     path(
         "institutional-payment/",

@@ -5,8 +5,8 @@ from django.shortcuts import HttpResponse
 from celery import shared_task
 
 
-@shared_task(bind=True)
-def send_token_mail(self,email,subject,message):
+# @shared_task(bind=True)
+def send_token_mail(email,subject,message):
    
     # message = f"Your pin is {token}. Login with your new account and enter this pin to verify."
     email = EmailMessage(

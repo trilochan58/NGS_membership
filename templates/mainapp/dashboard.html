@@ -163,10 +163,11 @@
                                             {% elif gl_user_membership.verification == False %}
                                                 <div class="admin-dash">
                                                     <h4>Your membership is under review. You will receive your membership card once we have verified your membership details.</h4>
+                                                    {% if gl_user_membership.rejected == True %}
                                                     <h4 style="color: red;">Your Membership is rejected !!! </h4>
-                                                    <h4 style="font-size: 16px;">Remarks: Hello </h4>
-                                                    <h4 style="font-size: 18px;"> To Resubmit Your Form: <a href="">Click Here!!!</a> </h4>
-                                                    
+                                                    <h4 style="font-size: 16px;">Remarks: {{ gl_user_membership.remarks }} </h4>
+                                                    <h4 style="font-size: 18px;"> To Resubmit Your Form: <a href="{% url 'edit_membership' id=gl_user_membership.id %}">Click Here!!!</a> </h4>
+                                                    {% endif %}
                                                 </div>
                                             {% elif ins_user_membership %}
                                                 <div class="admin-dash">
@@ -203,8 +204,11 @@
                             <div class="right-dash-content">
                                 <div class="user-name">
                                     <div class="initial">
+                                        {% if request.user.general_and_lifetime_user %}
+                                        <p><img src="{{ request.user.general_and_lifetime_user.pp_photo.url }}" class="w-100" alt=""></p>
+                                        {% else %}
                                         <p>{{request.user.first_name|first|upper}}</p> 
-                                        <p><img src="{% static 'images/pp.jpg' %}" class="w-100" alt=""></p>
+                                        {% endif %}
                                     </div>
 
                                     <div class="user-details">
@@ -249,6 +253,11 @@
                                     </button>
                                 </a>
                                 {% if request.user.role == 'A' %}
+                                <a href="{% url 'add_admin' %}">
+                                    <button>
+                                        Add Admin
+                                    </button>
+                                </a>
                                 <a href="{% url 'admin_list' %}">
                                     <button>
                                         Admin List

@@ -96,10 +96,10 @@
                                     <p class="hide">Not Verified</p>
                                     <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(198, 40, 40); font-size: 18px;"></i>
                                 </td>
-                                <td class="hide">www.hello.com</td>
-                                <td class="hide">IT</td>
-                                <td class="hide">CEO</td>
-                                <th class="hide">9854752565</th>
+                                <td class="hide">{{ rejected_ins_member.website}}</td>
+                                <td class="hide">{{ rejected_ins_member.working_field}}</td>
+                                <td class="hide">{{ rejected_ins_member.contact_person }}</td>
+                                <td class="hide">{{ rejected_ins_member.contact_number }}</td>
                                 <td>
                                 {% if rejected_ins_member.created_by.payment_user %}
                                     <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">
