@@ -154,11 +154,6 @@
                             <p>New Membership</p>
                         </a>
                         {% endif %}
-                        {% if request.user.general_and_lifetime_user.rejected == True or request.user.institutional_user.rejected == True %}
-                        <a href="{% url 'remarks' %}" class="left-dash-item">
-                            <p class="required">Remarks</p>
-                        </a>
-                        {% endif %}
                     {% endif %}
 
                     {% comment %} {% if request.user.general_and_lifetime_user.membership_type == "G" %}
@@ -185,16 +180,36 @@
         
                     {% if request.user.role == "A" %}
                     <a href="{% url 'gl_verification_list' %}" class="left-dash-item">
-                        <p>GLS Member Request</p>
+                        <p>Membership Requests</p>
                     </a>
 
                     <a href="{% url 'ins_verification_list' %}" class="left-dash-item">
-                        <p>Ins Member Request</p>
+                        <p>Ins Member Requests</p>
                     </a>
 
                     <a href="{% url 'upgrade' %}" class="left-dash-item">
                         <p>Upgrade Request</p>
                     </a>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Approved Members
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'general_approved' %}">General</a></li>
+                          <li><a class="dropdown-item" href="{% url 'institutional_approved' %}">Institutional</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown left-drop">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Rejected Members
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{% url 'general_rejected' %}">General</a></li>
+                          <li><a class="dropdown-item" href="{% url 'institutional_rejected' %}">Institutional</a></li>
+                        </ul>
+                    </div>
 
                     <div class="dropdown left-drop">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
