@@ -220,7 +220,7 @@ def payment_page(request):
     return_url = f"http://{host}/paypal-success-page/"
     cancel_url = f"http://{host}/payment-failed/"
 
-    if (request.user.general_and_lifetime_user.membership_type == "G" and request.user.general_and_lifetime_user.upgrade_request == False):
+    if (request.user.general_and_lifetime_user.membership_type == "G" and request.user.general_and_lifetime_user.upgrade_request != True):
         paypal_general_checkout = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": currency_rates(2000),
@@ -595,7 +595,7 @@ def initiate_khalti(request):
         }
     )
     headers = {
-        "Authorization": os.getenv("khalti_live_secret_key"),
+        "Authorization":'key live_secret_key_6a3abe8040034519918d88657d2239f6',
         "Content-Type": "application/json",
     }
     response = requests.request("POST", url, headers=headers, data=payload)
