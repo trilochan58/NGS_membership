@@ -13,6 +13,7 @@ urlpatterns = [
     path("verify-user/", views.verify_user, name="verify_user"),
     path("admin-create-admin",views.add_admin,name="add_admin"),
     path('admin-list',views.admin_list,name='admin_list'),
+    path('resend-token',views.resend_token,name='resend_token'),
     # url paths for password resetting
     path(
         "password_reset/",

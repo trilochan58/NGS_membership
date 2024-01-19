@@ -246,3 +246,21 @@ def verify_user(request):
         else:
             messages.error(request, "Invalid PIN. Check your mail for correct PIN.")
             return redirect("dashboard")
+
+
+def resend_token(request):
+    user=request.user
+    if request.method=='POST':
+        resend_verify = request.POST.get('resend_verify')
+        if resend_verify == user.first_name:
+            new_token=str(generate_unique_four_digit_number())
+            user.token=new_token
+            user.save()
+            subject="Verify your account."
+            message=f"Your pin is {user.token}. Login with your new account and enter this pin to verify."
+            send_token_mail(user.email,subject,message)
+            return redirect('dashboard')
+        else:
+            messages.error(request, "Given word doesn't match the desired word. Retype and resend")
+            return redirect('resend_token')
+    return render(request,'auth/token_resend.html')

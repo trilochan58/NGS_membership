@@ -1,0 +1,142 @@
+{% extends "base/header-footer.html" %}
+{% load static %}
+{% block container %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+
+    <section id="dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                    {% include 'base/sidebar.html' %}
+    
+                </div>
+
+                <div class="col-md-10">
+                    <div class="dashboard-mid-part managed-dash">
+                        <div class="up-dash">
+                            <div class="dashboard-content">
+                                <div class="dash-user">
+                                    <h3>Welcome! <span>{{ request.user.first_name }}</span></h3>
+                                </div>
+    
+                                {% for message in messages %}
+                                {% if message.tags == "success" %}
+                                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                    {{message}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% elif message.tags == "error" %}
+                                <div class="failed-message">
+                                    {{message}}
+                                </div>
+                                {% elif message.tags == "info" %}
+                                <div class="info-message">
+                                    {{message}}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+    
+                                <div class="dash-middle-content">
+                                    <div class="mid-part">
+                                        <div class="inner-box" >
+    
+                                            <div class="manage-dash">
+                                                {% if request.user.role == "U" %}
+                                                {% if request.user.is_verified == False %}
+                                            <h6 class="verfication-text">
+                                                Please enter {{ request.user.first_name }} and click resend button to receive  verification token.
+                                            </h6>
+                                            <form method="post" action="{% url 'resend_token' %}">
+                                                {% csrf_token %}
+                                                <div class="row mb-3">
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="resend_verify" class="form-control membership-div w-100" id="membership"
+                                                        placeholder="Enter {{ request.user.first_name }}" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="submit" class="btn btn-primary">Resend</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            {% endif %}
+                                            {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="right-dash">
+                                <div class="right-dash-content">
+                                    <div class="user-name">
+                                        <div class="initial">
+                                            {% if request.user.general_and_lifetime_user %}
+                                            <p><img src="{{ request.user.general_and_lifetime_user.pp_photo.url }}" class="w-100" alt=""></p>
+                                            {% else %}
+                                            <p>{{request.user.first_name|first|upper}}</p> 
+                                            {% endif %}
+                                        </div>
+    
+                                        <div class="user-details">
+                                            <div class="name">
+                                                <p>{{request.user.full_name}}</p>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                                                    viewBox="0 0 17 17" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M5.51371 3.26406C6.02816 3.22301 6.51655 3.02071 6.90936 2.68597C7.826 1.90481 9.17419 1.90481 10.0908 2.68597C10.4836 3.02071 10.972 3.22301 11.4865 3.26406C12.687 3.35987 13.6403 4.31318 13.7361 5.51371C13.7772 6.02816 13.9795 6.51655 14.3142 6.90936C15.0954 7.826 15.0954 9.17419 14.3142 10.0908C13.9795 10.4836 13.7772 10.972 13.7361 11.4865C13.6403 12.687 12.687 13.6403 11.4865 13.7361C10.972 13.7772 10.4836 13.9795 10.0908 14.3142C9.17419 15.0954 7.826 15.0954 6.90936 14.3142C6.51655 13.9795 6.02816 13.7772 5.51371 13.7361C4.31318 13.6403 3.35987 12.687 3.26406 11.4865C3.22301 10.972 3.02071 10.4836 2.68597 10.0908C1.90481 9.17419 1.90481 7.826 2.68597 6.90936C3.02071 6.51655 3.22301 6.02816 3.26406 5.51371C3.35987 4.31318 4.31318 3.35987 5.51371 3.26406ZM11.4658 7.46578C11.7782 7.15336 11.7782 6.64683 11.4658 6.33441C11.1534 6.02199 10.6468 6.02199 10.3344 6.33441L7.7001 8.96873L6.66578 7.93441C6.35336 7.62199 5.84683 7.62199 5.53441 7.93441C5.22199 8.24683 5.22199 8.75336 5.53441 9.06578L7.13441 10.6658C7.44683 10.9782 7.95336 10.9782 8.26578 10.6658L11.4658 7.46578Z"
+                                                        fill="#FCB810" />
+                                                </svg>
+                                            </div>
+                                            <div class="email">
+                                                <p>Email: <span>{{request.user.email}}</span></p>
+                                            </div>
+                                            <div class="phone">
+                                                <p>Phone No: <span>{{request.user.phone}}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="right-dash-buttons">
+                                    {% if request.user.general_and_lifetime_user.verification == True %}
+                                    <a href="">
+                                        <button onClick="printdiv('printable_div_id');">Print Card</button>
+                                    </a>
+    
+                                    <div class="save-card">
+                                        <button onclick="saveAsImage('savecard')">Save Card</button>
+                                    </div>
+                                    
+                                    {% endif %}
+                                    <a href="{% url 'edit_profile' %}">
+                                        <button>
+                                            Edit Profile
+                                        </button>
+                                    </a>
+                                    <a href="{% url 'change_password' %}">
+                                        <button>
+                                           Change Password
+                                        </button>
+                                    </a>
+                                    {% if request.user.role == 'A' %}
+                                    <a href="{% url 'add_admin' %}">
+                                        <button>
+                                            Add Admin
+                                        </button>
+                                    </a>
+                                    <a href="{% url 'admin_list' %}">
+                                        <button>
+                                            Admin List
+                                        </button>
+                                    </a>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div> 
+                    </div>
+                </div>
+            {% endblock %}

@@ -52,15 +52,20 @@
                                             </h6>
                                             <form method="post" action="{% url 'verify_user' %}">
                                                 {% csrf_token %}
-                                                <div class="mb-3">
-                                                    
-                                                    <input type="text" name="pin" maxlength="4" class="form-control membership-div" id="membership"
+                                                <div class="row mb-3">
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="pin" maxlength="4" class="form-control membership-div w-100" id="membership"
                                                         placeholder="Enter the PIN" required>
-                                                </div>
-                                                <div class="buttons">
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
                                                 </div>
                                             </form>
+                                                <div class="row mb-3">
+                                                    <p>Didn't receive token Mail ?
+                                                    <a href="{% url 'resend_token' %}"> Click  Here To Resend </a></p>
+                                                </div>
                                             {% endif %}
                                             {% endif %}
                                             </div>

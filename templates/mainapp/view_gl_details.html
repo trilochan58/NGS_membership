@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="card-body fi experience">
                                         
-                                        {% if gl.created_by.payment_user.payment_ss != "" %}
+                                        {% if gl.created_by.payment_user.payment_ss %}
                                         <div class="doc">
                                             <div class="left-field">
                                                 <h6 class="heading-title">Payment Screenshot</h6>
@@ -260,8 +260,8 @@
                                             <div class="right-field">
                                                 
                                                 <span> 
-                                                    <a href="{{gl.pp_photo.url}}" data-fancybox data-caption="Photo">
-                                                        <img src="{{gl.pp_photo.url}}" />
+                                                    <a href="{{gl.created_by.payment_user.payment_ss.url}}" data-fancybox data-caption="Photo">
+                                                        <img src="{{ gl.created_by.payment_user.payment_ss.url}}" />
                                                     </a>
                                                 </span>
                                             </div>
