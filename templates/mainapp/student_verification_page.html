@@ -120,12 +120,14 @@
                                             <div class="lefti">
                                                 <div class="left-field">
                                                     <h6 class="heading-title">Level:</h6>
+                                                    <h6 class="heading-title">University:</h6>
                                                     <h6 class="heading-title">Institution:</h6>
                                                     <h6 class="heading-title">Country of Institution:</h6>
                                                     <h6 class="heading-title">Expected Passed Year:</h6>
                                                 </div>
                                                 <div class="right-field">
-                                                    <p>{{gl.level}}</p>
+                                                    <p>{{gl.get_level_display }}</p>
+                                                    <p>{{gl.be_university }}</p>
                                                     <p>{{gl.institution}}</p>
                                                     <p>{{gl.get_country_of_institution_display}}</p>
                                                     <p>{{gl.expected_pass_year}}</p>
