@@ -115,6 +115,7 @@ class StudentMembershipForm(forms.ModelForm):
             "institution",
             "country_of_institution",
             "expected_pass_year",
+            "be_university",
         ]
 
 
