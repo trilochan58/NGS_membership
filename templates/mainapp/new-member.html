@@ -145,7 +145,7 @@
                                         
 
                                             <div class="member-info">
-                                                <p class="required">Citizenship Card No.</p>
+                                                <p class="required">Citizenship/Passport No.</p>
                                                 <div class="info-inner">
                                                     <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
                                                 </div>
@@ -387,7 +387,7 @@
                                             <div class="member-info">
                                                 <p class="required">Permanent Address</p>
                                                 <div class="info-inner">
-                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Format: Municipality- ward.no Distrit" value="{{ form.permanent_address.value }}" required>
                                                 </div>
                                             </div>
 
@@ -628,7 +628,7 @@
                                             <div class="member-info">
                                                 <p class="required">Permanent Address</p>
                                                 <div class="info-inner">
-                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Format: Municipality- ward.no Distrit" value="{{ form.permanent_address.value }}" required>
                                                 </div>
                                             </div>
                                             <div class="member-info">
@@ -649,7 +649,7 @@
                                                 </div>
                                             </div>
                                             <div class="member-info">
-                                                <p class="required">Citizenship Card No.</p>
+                                                <p class="required">Citizenship/Passport No.</p>
                                                 <div class="info-inner">
                                                     <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
                                                 </div>
@@ -679,6 +679,12 @@
                                                             <option value="{{k}}" {% if form.level.value == k %}selected{% endif %}>{{v}}</option>
                                                         {% endfor %}
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="member-info3">
+                                                <p class="required">University</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_university" id="beinstitute" placeholder="Enter the Institution" value="{{ form.be_university.value }}" required>
                                                 </div>
                                             </div>
 
