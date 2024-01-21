@@ -76,10 +76,10 @@
                                 <th>Company Address</th>
                                 <th>Registration No</th>
                                 <th>Verification</th>
-                                <th class="hide">Website</th>
-                                <th class="hide">Working Field</th>
-                                <th class="hide">Contact Person</th>
-                                <th class="hide">Contact Number</th>
+                                <th class="d-none">Website</th>
+                                <th class="d-none">Working Field</th>
+                                <th class="d-none">Contact Person</th>
+                                <th class="d-none">Contact Number</th>
                                 <th>Payment</th>
                                 <th>Action</th>
 
@@ -93,13 +93,13 @@
                                 <td>{{approved_ins_member.company_address}}</td>
                                 <td>{{approved_ins_member.registration_no}}</td>
                                 <td>
-                                    <p class="hide">Verified</p>
+                                    <p class="d-none">Verified</p>
                                     <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                 </td>
-                                <td class="hide">{{approved_ins_member.website}}</td>
-                                <td class="hide">{{approved_ins_member.working_field}}</td>
-                                <td class="hide">{{ approved_ins_member.contact_person }}</td>
-                                <td class="hide">{{ approved_ins_member.contact_number }}</td>
+                                <td class="d-none">{{approved_ins_member.website}}</td>
+                                <td class="d-none">{{approved_ins_member.working_field}}</td>
+                                <td class="d-none">{{ approved_ins_member.contact_person }}</td>
+                                <td class="d-none">{{ approved_ins_member.contact_number }}</td>
                                 <td>
                                 {% if members.created_by.payment_user %}
                                     <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">

@@ -1,5 +1,6 @@
 {% extends "base/header-footer.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block container %}
 
 <!DOCTYPE html>
@@ -8,6 +9,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
          integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
+         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+         
     </head>
   <body>
 
@@ -156,8 +161,14 @@
                                             </div>
                                             <div class="right-field">
                                                 <span>
-                                                    <a href="{{gl.citizenship.url}}" data-fancybox data-caption="Citizenship">
-                                                        <img src="{{gl.citizenship.url}}" />
+                                                    <a style="text-decoration:none;color:#0f52b6;display:flex;align-items:center;" href="{{gl.citizenship.url}}" {% if gl.citizenship.name|lower|get_file_extension != "pdf"%} data-fancybox {% endif %} data-caption="Citizenship" >
+                                                        {% if gl.citizenship.name|lower|get_file_extension == "pdf"%}
+                                                        <span class="material-symbols-outlined">
+                                                            file_present
+                                                            </span> Documents
+                                                        {% else %}
+                                                        <img src="{{ gl.citizenship.url }}"/>
+                                                        {% endif %}
                                                     </a>
                                                 </span>
                                             </div>
@@ -165,12 +176,18 @@
                                         <div class="doc">
                                             <div class="left-field">
                                                 <h6 class="heading-title">College ID Card:</h6>
-                        
+                    
                                             </div>
                                             <div class="right-field">
                                                 <span>  
-                                                    <a href="{{gl.college_id_card.url}}" data-fancybox data-caption="Document">
-                                                        <img src="{{gl.college_id_card.url}}" />
+                                                    <a style="text-decoration:none;color:#0f52b6;display:flex;align-items:center;" href="{{gl.college_id_card.url.url}}" {% if gl.college_id_card.url.name|lower|get_file_extension != "pdf"%} data-fancybox {% endif %} data-caption="Citizenship" >
+                                                        {% if gl.college_id_card.url.name|lower|get_file_extension == "pdf"%}
+                                                        <span class="material-symbols-outlined">
+                                                            file_present
+                                                            </span> Documents
+                                                        {% else %}
+                                                        <img src="{{ gl.college_id_card.url.url }}"/>
+                                                        {% endif %}
                                                     </a>
                                                 </span>
                                             </div>

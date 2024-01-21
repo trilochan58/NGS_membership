@@ -120,7 +120,7 @@
                                             <div class="member-info">
                                                 <p class="required">Permanent Address</p>
                                                 <div class="info-inner">
-                                                    <input type="text" name="permanent_address" id="address" placeholder="Enter Address" value="{{ form.permanent_address.value }}" required>
+                                                    <input type="text" name="permanent_address" id="address" placeholder="Format: Municipality- ward.no Distrit" value="{{ form.permanent_address.value }}" required>
                                                 </div>
                                             </div>
 
@@ -174,7 +174,12 @@
                                                     <input type="text" name="be_subject" id="besubject" placeholder="Enter the Subject" value="{{ form.be_subject.value }}" required>
                                                 </div>
                                             </div>
-
+                                            <div class="member-info3">
+                                                <p class="required">University</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="be_university" id="beinstitute" placeholder="Enter the University" value="{{ form.be_university.value }}" required>
+                                                </div>
+                                            </div>
                                             <div class="member-info3">
                                                 <p class="required">Institution</p>
                                                 <div class="info-inner">
@@ -217,6 +222,12 @@
                                                     <input type="text" name="me_institution" id="meinstitute" placeholder="Enter the Institution" value="{{ form.me_institution.value }}">
                                                 </div>
                                             </div>
+                                            <div class="member-info3">
+                                                <p class="required">University</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="me_university" id="beinstitute" placeholder="Enter the University" value="{{ form.me_university.value }}" required>
+                                                </div>
+                                            </div>
 
                                             <div class="member-info3">
                                                 <p>Country</p>
@@ -251,6 +262,12 @@
                                                 <p>Institution</p>
                                                 <div class="info-inner">
                                                     <input type="text" name="phd_institution" id="phdinstitute" placeholder="Enter the Institution" value="{{ form.phd_institution.value }}">
+                                                </div>
+                                            </div>
+                                            <div class="member-info3">
+                                                <p class="required">University</p>
+                                                <div class="info-inner">
+                                                    <input type="text" name="phd_university" id="beinstitute" placeholder="Enter the University" value="{{ form.phd_university.value }}" required>
                                                 </div>
                                             </div>
 
@@ -302,7 +319,7 @@
                                             <div class="member-info2">
                                                 <p class="required">Any highest degree certificate or (Document that certifies you are eligible for NGS Membership)</p>
                                                 <div class="inner-image">
-                                                    <input type="file" name="masters_document" id="masterdoc" accept="image/*" required>
+                                                    <input type="file" name="masters_document" id="masterdoc" required>
                                                 </div>
                                                 {% if form.masters_document.errors %}
                                                     <p class="error">{{ form.masters_document.errors }}</p>
@@ -394,7 +411,7 @@
                                             </div>
 
                                             <div class="member-info">
-                                                <p class="required">Citizenship Card No.</p>
+                                                <p class="required">Citizenship/Passport No. </p>
                                                 <div class="info-inner">
                                                     <input type="text" name="citizenship_card_no" id="citizen" placeholder="Enter the Citizenship Card No." value="{{ form.citizenship_card_no.value }}" required>
                                                 </div>

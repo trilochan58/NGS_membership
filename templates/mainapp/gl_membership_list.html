@@ -113,13 +113,13 @@
                                   <th>Name of Applicant</th>
                                   <th>Membership Type</th>
                                   <th>Verification</th>
-                                  <th class="hide">Date of Birth</th>
-                                  <th class="hide">Gender</th>
-                                  <th class="hide">Permanent Address</th>
-                                  <th class="hide">Affiliation</th>
-                                  <th class="hide">Nationality</th>
-                                  <th class="hide">Citizenship Card No.</th>
-                                  <th class="hide">Issued Form</th>
+                                  <th class="d-none">Date of Birth</th>
+                                  <th class="d-none">Gender</th>
+                                  <th class="d-none">Permanent Address</th>
+                                  <th class="d-none">Affiliation</th>
+                                  <th class="d-none">Nationality</th>
+                                  <th class="d-none">Citizenship Card No.</th>
+                                  <th class="d-none">Issued Form</th>
                                   <th>Payment</th>
                                   <th>Action</th>
                               </tr>
@@ -132,20 +132,20 @@
                                   <td><b>{{members.get_membership_type_display}}</b></td>
                                   <td>
                                     {% if members.verification == True %}
-                                      <p class="hide">Verified</p>
+                                      <p class="d-none">Verified</p>
                                       <i class="fa-solid fa-circle-check" id="checked" style="color:#27d935; font-size: 18px;"></i>
                                     {% elif members.verification == False %}
-                                      <p class="hide">Not Verfied</p>
+                                      <p class="d-none">Not Verfied</p>
                                       <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(255, 193, 7); font-size: 18px;"></i>
                                     {% endif %}
                                   </td>
-                                  <td class="hide">{{ members.dob }}</td>
-                                  <td class="hide">{{ members.gender }}</td>
-                                  <td class="hide">{{ members.permanent_address }}r</td>
-                                  <td class="hide">{{ members.affiliation }}</td>
-                                  <td class="hide">{{ members.nationality }}</td>
-                                  <td class="hide">{{ members.citizenship_card_no }}</td>
-                                  <td class="hide">{{ members.issued_from }}</td>
+                                  <td class="d-none">{{members.dob}}</td>
+                                  <td class="d-none">{{members.gender}}</td>
+                                  <td class="d-none">{{members.permanent_address}}</td>
+                                  <td class="d-none">{{members.affiliation}}</td>
+                                  <td class="d-none">{{members.nationality}}</td>
+                                  <td class="d-none">{{ members.citizenship_card_no}}</td>
+                                  <td class="d-none">{{ members.issued_from }}</td>
                                   <td>
                                       {% if members.created_by.payment_user %}
                                           <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{members.id}}">

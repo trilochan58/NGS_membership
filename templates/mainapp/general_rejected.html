@@ -104,13 +104,13 @@
                                   <th>Name of Applicant</th>
                                   <th>Membership Type</th>
                                   <th>Verification</th>
-                                  <th class="hide">Date of Birth</th>
-                                  <th class="hide">Gender</th>
-                                  <th class="hide">Permanent Address</th>
-                                  <th class="hide">Affiliation</th>
-                                  <th class="hide">Nationality</th>
-                                  <th class="hide">Citizenship Card No.</th>
-                                  <th class="hide">Issued Form</th>
+                                  <th class="d-none">Date of Birth</th>
+                                  <th class="d-none">Gender</th>
+                                  <th class="d-none">Permanent Address</th>
+                                  <th class="d-none">Affiliation</th>
+                                  <th class="d-none">Nationality</th>
+                                  <th class="d-none">Citizenship Card No.</th>
+                                  <th class="d-none">Issued Form</th>
                                   <th>Payment</th>
                                   <th>Action</th>
                               </tr>
@@ -122,16 +122,16 @@
                                   <td>{{rejected_member.name_of_applicant}}</td>
                                   <td><b>{{rejected_member.get_membership_type_display}}</b></td>
                                   <td>
-                                    <p class="hide">Not Verified</p>
+                                    <p class="d-none">Not Verified</p>
                                       <i class="fa-solid fa-circle-xmark" id="not-checked" style="color:rgb(198, 40, 40); font-size: 18px;"></i>
                                   </td>
-                                  <td class="hide">{{ rejected_member.dob }}</td>
-                                  <td class="hide">{{ rejected_member.gender }}</td>
-                                  <td class="hide">{{ rejected_member.permanent_address }}r</td>
-                                  <td class="hide">{{ rejected_member.affiliation }}</td>
-                                  <td class="hide">{{ rejected_member.nationality }}</td>
-                                  <td class="hide">{{ rejected_member.citizenship_card_no }}</td>
-                                  <td class="hide">{{ rejected_member.issued_from }}</td>
+                                  <td class="d-none">{{ rejected_member.dob }}</td>
+                                  <td class="d-none">{{ rejected_member.gender }}</td>
+                                  <td class="d-none">{{ rejected_member.permanent_address }}r</td>
+                                  <td class="d-none">{{ rejected_member.affiliation }}</td>
+                                  <td class="d-none">{{ rejected_member.nationality }}</td>
+                                  <td class="d-none">{{ rejected_member.citizenship_card_no }}</td>
+                                  <td class="d-none">{{ rejected_member.issued_from }}</td>
                                   <td>
                                       {% if rejected_member.created_by.payment_user %}
                                           <button type="button" class="btn btn-primary paid-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{rejected_member.id}}">

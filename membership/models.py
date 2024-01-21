@@ -33,15 +33,18 @@ class GeneralAndLifetimeMembership(models.Model):
     # Educational Details
     be_subject = models.CharField(max_length=200)
     be_institution = models.CharField(max_length=200)
+    be_university =models.CharField(max_length=200,null=True)
     be_country = models.CharField(max_length=2, choices=choices.COUNTRY_CHOICES)
     be_passed_year = models.CharField(max_length=4)
     me_subject = models.CharField(max_length=200, blank=True, null=True)
+    me_university=models.CharField(max_length=200,null=True)
     me_institution = models.CharField(max_length=200, blank=True, null=True)
     me_country = models.CharField(
         max_length=2, choices=choices.COUNTRY_CHOICES, blank=True, null=True
     )
     me_passed_year = models.CharField(max_length=4, blank=True, null=True)
     phd_subject = models.CharField(max_length=200, blank=True, null=True)
+    phd_university=models.CharField(max_length=200,null=True)
     phd_institution = models.CharField(max_length=200, blank=True, null=True)
     phd_country = models.CharField(
         max_length=2, choices=choices.COUNTRY_CHOICES, blank=True, null=True
@@ -49,8 +52,8 @@ class GeneralAndLifetimeMembership(models.Model):
     phd_passed_year = models.CharField(max_length=4, blank=True, null=True)
     # Documents
     pp_photo = models.ImageField(upload_to="general_and_lifetime_documents")
-    citizenship = models.ImageField(upload_to="general_and_lifetime_documents")
-    masters_document = models.ImageField(upload_to="general_and_lifetime_documents")
+    citizenship = models.FileField(upload_to="general_and_lifetime_documents")
+    masters_document = models.FileField(upload_to="general_and_lifetime_documents")
     # Work Details
     work_experience = models.TextField()
     remarks = models.TextField(blank=True, null=True)
@@ -87,9 +90,9 @@ class InstitutionalMembership(models.Model):
     company_name = models.CharField(max_length=200)
     company_address = models.CharField(max_length=200)
     registration_no = models.CharField(max_length=200)
-    pan_document = models.ImageField(upload_to="institutional_documents")
-    registration_document = models.ImageField(upload_to="institutional_documents")
-    company_document = models.ImageField(upload_to="institutional_documents")
+    pan_document = models.FileField(upload_to="institutional_documents")
+    registration_document = models.FileField(upload_to="institutional_documents")
+    company_document = models.FileField(upload_to="institutional_documents")
     working_field = models.CharField(max_length=200)
     contact_person = models.CharField(max_length=200)
     contact_number = models.CharField(max_length=10)

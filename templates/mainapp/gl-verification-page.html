@@ -1,6 +1,8 @@
 {% extends "base/header-footer.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block container %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +10,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
          integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
+         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
          
     </head>
   <body>
@@ -97,7 +102,7 @@
                                         <div class="righti">
                                             <div class="left-field">
                                                 <h6 class="heading-title">Issued From:</h6>
-                                                <h6 class="heading-title">Citizen Card No:</h6>
+                                                <h6 class="heading-title">Citizen/Passport No:</h6>
                                                 <h6 class="heading-title">Gender:</h6>
                                                 <h6 class="heading-title">Permanent Address:</h6>
                                             </div>
@@ -123,12 +128,14 @@
                                             <div class="lefti">
                                                 <div class="left-field">
                                                     <h6 class="heading-title">Subject:</h6>
+                                                    <h6 class="heading-title">University:</h6>
                                                     <h6 class="heading-title">Institution:</h6>
                                                     <h6 class="heading-title">Country:</h6>
                                                     <h6 class="heading-title">Passed Year:</h6>
                                                 </div>
                                                 <div class="right-field">
                                                     <p>{{gl.be_subject}}</p>
+                                                    <p>{{gl.be_university}}</p>
                                                     <p>{{gl.be_institution}}</p>
                                                     <p>{{gl.get_be_country_display}}</p>
                                                     <p>{{gl.be_passed_year}}</p>
@@ -142,16 +149,18 @@
                                                 <div class="left-field">
                         
                                                     <h6 class="heading-title">Subject:</h6>
+                                                    <h6 class="heading-title">University:</h6>
                                                     <h6 class="heading-title">Institution:</h6>
                                                     <h6 class="heading-title">Country:</h6>
                                                     <h6 class="heading-title">Passed Year:</h6>
                                                 </div>
                                                 <div class="right-field">
                         
-                                                    <p>{{gl.me_subject}}</p>
-                                                    <p>{{gl.me_institution}}</p>
-                                                    <p>{{gl.get_me_country_display}}</p>
-                                                    <p>{{gl.me_passed_year}}</p>
+                                                    <p>{{gl.me_subject|default:''}}</p>
+                                                    <p>{{gl.me_university|default:''}}</p>
+                                                    <p>{{gl.me_institution|default:''}}</p>
+                                                    <p>{{gl.get_me_country_display|default:''}}</p>
+                                                    <p>{{gl.me_passed_year|default:''}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,12 +170,14 @@
                                             <div class="righti">
                                                 <div class="left-field">
                                                     <h6 class="heading-title">Subject:</h6>
+                                                    <h6 class="heading-title">University:</h6>
                                                     <h6 class="heading-title">Institution:</h6>
                                                     <h6 class="heading-title">Country:</h6>
                                                     <h6 class="heading-title">Passed Year:</h6>
                                                 </div>
                                                 <div class="right-field">
                                                     <p>{{gl.phd_subject|default:''}}</p>
+                                                    <p>{{gl.phd_university|default:''}}</p>
                                                     <p>{{gl.phd_institution|default:''}}</p>
                                                     <p>{{gl.get_phd_country_display|default:''}}</p>
                                                     <p>{{gl.phd_passed_year|default:''}}</p>
@@ -202,8 +213,14 @@
                                             </div>
                                             <div class="right-field citizen-img">
                                                 <span>
-                                                    <a href="{{gl.citizenship.url}}" data-fancybox data-caption="Citizenship">
-                                                        <img src="{{gl.citizenship.url}}" />
+                                                    <a style="text-decoration:none;color:#0f52b6;display:flex;align-items:center;" href="{{gl.citizenship.url}}" {% if gl.citizenship.name|lower|get_file_extension != "pdf"%} data-fancybox {% endif %} data-caption="Citizenship" >
+                                                        {% if gl.citizenship.name|lower|get_file_extension == "pdf"%}
+                                                        <span class="material-symbols-outlined">
+                                                            file_present
+                                                            </span> Documents
+                                                        {% else %}
+                                                        <img src="{{ gl.citizenship.url }}"/>
+                                                        {% endif %}
                                                     </a>
                                                 </span>
                                             </div>
@@ -215,8 +232,15 @@
                                             </div>
                                             <div class="right-field">
                                                 <span>  
-                                                    <a href="{{gl.masters_document.url}}" data-fancybox data-caption="Document">
-                                                        <img src="{{gl.masters_document.url}}" />
+                                                    <a style="text-decoration:none;color:#0f52b6;display:flex;align-items:center;"href="{{ gl.masters_document.url }}" {% if gl.masters_document.name|lower|get_file_extension != "pdf"%} data-fancybox {% endif %}  data-caption="Master Document">
+                                                         {% if gl.masters_document.name|lower|get_file_extension == "pdf" %} 
+                                                         <span class="material-symbols-outlined me-2">
+                                                            file_present
+                                                            </span> Documents
+                                                        {% else %}
+                                                        <img src="{{ gl.masters_document.url }}" alt="Master Document">
+                                                        {% endif %}
+                                                        
                                                     </a>
                                                 </span>
                                             </div>
